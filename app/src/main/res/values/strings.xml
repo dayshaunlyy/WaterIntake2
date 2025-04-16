@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WaterIntake</string>
+    <string name="please_login_or_signup">Please Login or signup</string>
 </resources>
