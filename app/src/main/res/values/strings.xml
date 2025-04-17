@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">WaterIntake</string>
+    <string name="please_login_or_signup">Please Login or signup</string>
+    <string name="username">Username:</string>
+    <string name="enter_your_username">Enter Your Username</string>
+    <string name="password">Password:</string>
+    <string name="enter_your_password">Enter Your Password</string>
+    <string name="login">Login!</string>
+    <string name="signup">SignUp!</string>
 </resources>
