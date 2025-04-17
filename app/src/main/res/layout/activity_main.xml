@@ -24,8 +24,24 @@
         android:layout_width="120dp"
         android:layout_height="36dp"
         android:layout_marginTop="36dp"
-        android:text="Username:"
+        android:layout_marginStart="23dp"
+        android:text="@string/username"
         android:textSize="22sp"
-        app:layout_constraintTop_toBottomOf="@+id/promptDisplayTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/promptDisplayTextView"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/usernameInputEditText"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="23dp"
+        android:layout_marginTop="36dp"
+        android:hint="@string/enter_your_username"
+        android:inputType="textAutoComplete"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/promptDisplayTextView"
+        app:layout_constraintBaseline_toBaselineOf="@id/usernameDisplayTextView"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
