@@ -7,7 +7,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import com.example.waterintake.database.dao.WaterIntakeDAO;
+import com.example.waterintake.database.dao.UserDAO;
 import com.example.waterintake.database.entities.WaterIntake;
 import com.example.waterintake.util.LocalDateTimeConverter;
 
