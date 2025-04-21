@@ -1,4 +1,4 @@
-package com.example.waterintake.database;
+package com.example.waterintake.database.dao;
 import androidx.room.Dao;
 
 @Dao
