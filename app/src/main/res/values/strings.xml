@@ -7,4 +7,5 @@
     <string name="enter_your_password">Enter Your Password</string>
     <string name="login">Login!</string>
     <string name="signup">SignUp!</string>
+    <string name="admin">Admin</string>
 </resources>
