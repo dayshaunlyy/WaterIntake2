@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(v -> {
             String username = usernameInput.getText().toString().trim().toLowerCase();
-            hideKeyboard();
+            hideKeyboard();//this is how to hide a key board, nice
 
             if (username.equals("testuser1")) {
                 prefs.edit().putString("username", "testuser1").putBoolean("isAdmin", false).apply();
