@@ -1,10 +1,21 @@
+
+
 plugins {
     alias(libs.plugins.android.application)
+
 }
 
 android {
     namespace 'com.example.waterintake'
     compileSdk 35
+    viewBinding{
+        enabled = true
+    }
+    buildFeatures {
+        viewBinding true
+    }
+
+
 
     defaultConfig {
         applicationId "com.example.waterintake"
@@ -34,7 +45,11 @@ dependencies {
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
+    implementation libs.databinding.runtime
+    implementation libs.room.runtime
     testImplementation libs.junit
+    annotationProcessor libs.room.compiler
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
 }

@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="workout_high">#FF0000</color> <!-- Bright Red -->
+    <color name="workout_moderate">#FFA500</color> <!-- Orange -->
+    <color name="workout_light">#FFFF00</color> <!-- Yellow -->
+    <color name="workout_sedentary">#00FF00</color> <!-- Green -->
+
 </resources>
