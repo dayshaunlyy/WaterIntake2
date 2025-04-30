@@ -1,11 +1,25 @@
 <resources>
     <string name="app_name">WaterIntake</string>
-    <string name="please_login_or_signup">Please Login or signup</string>
-    <string name="username">Username:</string>
-    <string name="enter_your_username">Enter Your Username</string>
-    <string name="password">Password:</string>
-    <string name="enter_your_password">Enter Your Password</string>
-    <string name="login">Login!</string>
-    <string name="signup">SignUp!</string>
-    <string name="admin">Admin</string>
+    <string name="full_name">Full Name</string>
+    <string name="email">Email</string>
+    <string name="username">Username</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="password">Password</string>
+    <string name="admin_dashboard">Admin Dashboard</string>
+    <string name="here_you_can_manage_users_and_view_reports">Here you can manage users and view reports.</string>
+    <string name="log_in">Log In</string>
+    <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign up</string>
+    <string name="height_feet">Height (Feet)</string>
+    <string name="height_inches">Height (Inches)</string>
+    <string name="weight_lbs_or_kg">Weight (lbs or kg)</string>
+    <string name="kg">kg</string>
+    <string name="lbs">lbs</string>
+    <string-array name="workout_levels">
+        <item>High (6–7 times a week)</item>
+        <item>Moderate (3–5 times a week)</item>
+        <item>Light (1–3 times a week)</item>
+        <item>Sedentary (little/no exercise)</item>
+    </string-array>
+
 </resources>
+
