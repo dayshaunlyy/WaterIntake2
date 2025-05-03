@@ -198,20 +198,22 @@
 
 
     <!-- Creatine Label -->
+
+
     <TextView
         android:id="@+id/TakeCreatine"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="Creatine"
         android:textColor="#00FFFF"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/workoutLevelSpinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@+id/workoutLevelSpinner" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/creatineSwitch"
@@ -229,25 +231,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="5dp" />
 
-
-
-
-
-
-
-
-
-
-
-
-
     <!-- Buttons -->
 
     <Button
         android:id="@+id/btnEditProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="348dp"
+        android:layout_marginTop="260dp"
         android:backgroundTint="#00FFFF"
         android:text="Save Changes"
         android:textColor="#000000"
@@ -260,12 +250,12 @@
         android:id="@+id/btnLogout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="#00FFFF"
         android:text="Log Out"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnEditProfile" />
 
