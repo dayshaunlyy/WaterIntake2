@@ -7,6 +7,8 @@ import android.widget.CompoundButton;
 import android.widget.SeekBar;
 import android.widget.Toast;
 import android.widget.AdapterView;
+import android.content.Intent;
+import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -51,7 +53,14 @@ public class UserDashboardActivity extends AppCompatActivity {
         binding.workoutLevelSpinner.setAdapter(adapter);
 
         binding.btnEditProfile.setOnClickListener(v -> saveChanges());
-        binding.btnLogout.setOnClickListener(v -> finish());
+        binding.btnLogout.setOnClickListener(v -> {
+            SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+            prefs.edit().clear().apply();
+
+            Intent intent = new Intent(UserDashboardActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        });
 
         setupSeekBar();
         setupCreatineSwitch();
