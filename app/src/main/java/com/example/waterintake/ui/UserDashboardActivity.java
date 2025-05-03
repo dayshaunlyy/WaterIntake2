@@ -1,5 +1,6 @@
 package com.example.waterintake.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -56,6 +57,14 @@ public class UserDashboardActivity extends AppCompatActivity {
         setupSeekBar();
         setupCreatineSwitch();
         setupWorkoutSpinner();
+
+
+
+        findViewById(R.id.btnSettings).setOnClickListener(v -> {
+            Intent intent = new Intent(UserDashboardActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     private void setupWorkoutSpinner() {
