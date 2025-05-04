@@ -75,12 +75,16 @@ public class UserDashboardActivity extends AppCompatActivity {
         setupWorkoutSpinner();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
+
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
 
             if (id == R.id.nav_progress) {
-                Toast.makeText(this, "Progress clicked", Toast.LENGTH_SHORT).show();
+                Intent progressIntent = new Intent(UserDashboardActivity.this, ProgressActivity.class);
+                progressIntent.putExtra("userId", user.getId());
+                startActivity(progressIntent);
                 return true;
+
             } else if (id == R.id.nav_logout) {
                 SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
                 prefs.edit().clear().apply();
