@@ -8,7 +8,12 @@
     </style>
 
     <!-- App's main theme -->
-    <style name="Theme.WaterIntake" parent="Base.Theme.WaterIntake" />
+    <style name="Theme.WaterIntake" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Light background -->
+        <item name="android:windowBackground">@color/light_background</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+    </style>
 
     <!-- 🔥 NEW: Launcher theme for app startup -->
     <style name="Theme.WaterIntake.Launcher" parent="Theme.Material3.DayNight.NoActionBar">
@@ -16,5 +21,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
+
 
 </resources>

@@ -7,4 +7,10 @@
     <color name="workout_light">#FFFF00</color> <!-- Yellow -->
     <color name="workout_sedentary">#00FF00</color> <!-- Green -->
 
+
+    <color name="light_background">#FFFFFF</color>
+    <color name="dark_background">#121212</color>
+    <color name="colorPrimary">#00FFFF</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+
 </resources>
