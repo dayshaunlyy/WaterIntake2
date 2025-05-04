@@ -15,4 +15,8 @@ public interface DrinkLogDao {
 
     @Query("SELECT * FROM drink_log WHERE user_id = :userId ORDER BY timestamp DESC")
     List<DrinkLogEntry> getLogsForUser(int userId);
+
+    @Query("SELECT SUM(amount_ml) FROM drink_log WHERE user_id = :userId AND date(timestamp) = date('now')")
+    Double getTodayIntake(int userId);
+
 }

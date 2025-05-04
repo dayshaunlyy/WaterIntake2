@@ -85,6 +85,10 @@ public class UserDashboardActivity extends AppCompatActivity {
                 startActivity(progressIntent);
                 return true;
 
+            } else if (id == R.id.nav_dashboard) {
+                Toast.makeText(this, "You're already on the Dashboard", Toast.LENGTH_SHORT).show();
+                return true;
+
             } else if (id == R.id.nav_logout) {
                 SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
                 prefs.edit().clear().apply();
@@ -97,6 +101,7 @@ public class UserDashboardActivity extends AppCompatActivity {
 
             return false;
         });
+
 
 
     }
