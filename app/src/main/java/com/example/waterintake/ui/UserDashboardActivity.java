@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.AdapterView;
 import android.content.Intent;
@@ -26,6 +26,8 @@ public class UserDashboardActivity extends AppCompatActivity {
     private ActivityUserDashboardBinding binding;
     private User user;
     private final ExecutorService executor = Executors.newSingleThreadExecutor(); // ✅ More efficient
+    private Switch yourSwitch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +41,11 @@ public class UserDashboardActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid User", Toast.LENGTH_SHORT).show();
             finish();
             return;
+
         }
+
+        yourSwitch = findViewById(R.id.transferSwitch);
+        setupSwitch();
 
         loadUserDetails(userId);
 
@@ -62,7 +68,7 @@ public class UserDashboardActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        setupSeekBar();
+        setupSwitch();
         setupCreatineSwitch();
         setupWorkoutSpinner();
     }
@@ -103,25 +109,20 @@ public class UserDashboardActivity extends AppCompatActivity {
         });
     }
 
-    private void setupSeekBar() {
-        binding.transferSwitch.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress == 0) {
-                    if (user != null) user.setUnitSystem("standard");
+    private void setupSwitch() {
+        yourSwitch.setOnCheckedChangeListener((buttonView, isCheckedVal) -> {
+            if (user != null) {
+                if (isCheckedVal) {
+                    user.setUnitSystem("metric");
                 } else {
-                    if (user != null) user.setUnitSystem("metric");
+                    user.setUnitSystem("standard");
                 }
-                setupViewByUnit();
-                prefillHeightWeight();
             }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            setupViewByUnit();
+            prefillHeightWeight();
         });
     }
+
 
     private void setupCreatineSwitch() {
         binding.creatineSwitch.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
@@ -153,7 +154,7 @@ public class UserDashboardActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 if (user != null) {
                     binding.tvUserName.setText("Welcome, " + user.getUsername() + "!");
-                    binding.transferSwitch.setProgress("standard".equals(user.getUnitSystem()) ? 0 : 1);
+                    binding.transferSwitch.setChecked("standard".equals(user.getUnitSystem()));
                     binding.creatineSwitch.setChecked(user.getUseCreatine());
                     binding.workoutLevelSpinner.setSelection(getWorkoutIndex(user.getWorkoutLevel()));
 
