@@ -79,7 +79,12 @@ public class UserDashboardActivity extends AppCompatActivity {
 
 
         binding.btnEditProfile.setOnClickListener(v -> saveChanges());
-        binding.btnLogout.setOnClickListener(v -> finish());
+        binding.btnLogout.setOnClickListener(v -> {
+            Intent intent = new Intent(UserDashboardActivity.this, LoginActivity.class); // Replace with your login activity class
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear back stack
+            startActivity(intent);
+            finish();
+        });
 
         setupSeekBar();
         setupCreatineSwitch();
