@@ -10,11 +10,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.waterintake.data.dao.UserDao;
 import com.example.waterintake.data.entities.User;
+import com.example.waterintake.data.dao.DrinkLogDao;
+import com.example.waterintake.data.entities.DrinkLogEntry;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class}, version = 3, exportSchema = false)// ✅ bump version to 2
+@Database(entities = {User.class, DrinkLogEntry.class}, version = 3, exportSchema = false)// ✅ bump version to 2
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase instance;
@@ -39,6 +41,7 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return instance;
     }
+
 
     // Room callback to prepopulate database
     private static final Callback roomCallback = new Callback() {
@@ -76,6 +79,10 @@ public abstract class AppDatabase extends RoomDatabase {
             database.execSQL("ALTER TABLE users ADD COLUMN workoutLevel TEXT DEFAULT 'Moderate'");
         }
     };
+
+    // registers DAO in the database
+    public abstract DrinkLogDao drinkLogDao();
+
 
 
 }
