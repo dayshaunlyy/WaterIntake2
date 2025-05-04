@@ -9,6 +9,8 @@ import android.widget.Toast;
 import android.widget.AdapterView;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -71,6 +73,28 @@ public class UserDashboardActivity extends AppCompatActivity {
         setupSwitch();
         setupCreatineSwitch();
         setupWorkoutSpinner();
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_progress) {
+                Toast.makeText(this, "Progress clicked", Toast.LENGTH_SHORT).show();
+                return true;
+            } else if (id == R.id.nav_logout) {
+                SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+                prefs.edit().clear().apply();
+
+                Intent intent = new Intent(UserDashboardActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                return true;
+            }
+
+            return false;
+        });
+
+
     }
 
     private void setupWorkoutSpinner() {
