@@ -7,16 +7,20 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+import androidx.room.TypeConverters;
 
 import com.example.waterintake.data.dao.UserDao;
 import com.example.waterintake.data.entities.User;
 import com.example.waterintake.data.dao.DrinkLogDao;
 import com.example.waterintake.data.entities.DrinkLogEntry;
+import com.example.waterintake.util.LocalDateTimeConverter;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, DrinkLogEntry.class}, version = 3, exportSchema = false)// ✅ bump version to 2
+
+@Database(entities = {User.class, DrinkLogEntry.class}, version = 4, exportSchema = false)
+@TypeConverters(LocalDateTimeConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase instance;
@@ -32,7 +36,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "water_intake_database")
-                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3) // ✅ Add both migrations
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4) // ✅ Add both migrations
                             .addCallback(roomCallback)
                             .build();
 
@@ -79,6 +83,18 @@ public abstract class AppDatabase extends RoomDatabase {
             database.execSQL("ALTER TABLE users ADD COLUMN workoutLevel TEXT DEFAULT 'Moderate'");
         }
     };
+
+    static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE IF NOT EXISTS `drink_log` (" +
+                    "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    "`user_id` INTEGER NOT NULL, " +
+                    "`amount_ml` REAL NOT NULL, " +
+                    "`timestamp` TEXT)");
+        }
+    };
+
 
     // registers DAO in the database
     public abstract DrinkLogDao drinkLogDao();
