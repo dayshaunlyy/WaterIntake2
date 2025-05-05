@@ -99,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         double waterGoal = calculateWaterGoal(user);
-        binding.tvWaterGoal.setText(underlineAfterColon("Daily Water Goal", String.format("%.1f L", waterGoal)));
+        binding.tvWaterGoal.setText(underlineText(String.format("%.1f L", waterGoal)));
+
+
     }
 
     private SpannableString underlineText(String text) {// helper method for underlining the text after the needed stat.

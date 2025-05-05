@@ -126,17 +126,39 @@
         app:constraint_referenced_ids="creatineLogo,nocreatineLogo"  />
 
     <!-- Water Goal -->
-    <TextView
-        android:id="@+id/tvWaterGoal"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/waterGoalBox"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Daily Water Goal: 2.5 L"
-        android:textColor="#00FFFF"
-        android:textSize="25sp"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/neon_border"
         app:layout_constraintTop_toBottomOf="@id/logoBarrier"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        android:layout_marginTop="24dp">
+
+        <TextView
+            android:id="@+id/waterGoalLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Daily Water Goal"
+            android:textSize="25sp"
+            android:textColor="#00FFFF"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tvWaterGoal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2.5 L"
+            android:textSize="35sp"
+            android:textColor="#00FFFF"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:gravity="center" />
+    </LinearLayout>
+
 
     <!-- Back Button -->
     <Button
