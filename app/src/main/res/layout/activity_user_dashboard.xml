@@ -250,7 +250,17 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@mipmap/ic_launcher"
-        android:contentDescription="Creatine Logo"
+        android:contentDescription="Creatine Logo BLUE"
+        app:layout_constraintTop_toBottomOf="@id/creatineSwitch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="30dp" />
+    <ImageView
+        android:id="@+id/nocreatineLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_logono_c"
+        android:contentDescription="Creatine Logo RED"
         app:layout_constraintTop_toBottomOf="@id/creatineSwitch"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

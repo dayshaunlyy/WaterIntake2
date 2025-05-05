@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -60,7 +63,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayUserData(User user) {
-        binding.tvUserName.setText("Welcome, " + user.getUsername() + "!");
+        binding.tvUserName.setText(user.getUsername() + " Stats");
+
+        String heightText;
+        String weightText;
 
         if ("standard".equals(user.getUnitSystem())) {
             double heightInInches = user.getHeight() / 2.54;
@@ -69,25 +75,27 @@ public class MainActivity extends AppCompatActivity {
             int feet = (int) (heightInInches / 12);
             int inches = (int) (heightInInches % 12);
 
-            binding.tvUserHeight.setText(String.format("Height: %d' %d\"", feet, inches));
-            binding.tvUserWeight.setText(String.format("Weight: %.1f lbs", weightInLbs));
+            heightText = String.format("%d' %d\"", feet, inches);
+            weightText = String.format("%.1f lbs", weightInLbs);
         } else {
-            binding.tvUserHeight.setText(String.format("Height: %.1f cm", user.getHeight()));
-            binding.tvUserWeight.setText(String.format("Weight: %.1f kg", user.getWeight()));
+            heightText = String.format("%.1f cm", user.getHeight());
+            weightText = String.format("%.1f kg", user.getWeight());
         }
 
-        binding.tvUserWorkoutLevel.setText("Workout Level: " + user.getWorkoutLevel());
+        binding.tvUserHeight.setText(underlineAfterColon("Height", heightText));
+        binding.tvUserWeight.setText(underlineAfterColon("Weight", weightText));
+        binding.tvUserWorkoutLevel.setText(underlineAfterColon("Workout Level", user.getWorkoutLevel()));
 
         if (user.getUseCreatine()) {
             binding.creatineLogo.setVisibility(View.VISIBLE);
         } else {
-            binding.creatineLogo.setVisibility(View.GONE);
+            binding.nocreatineLogo.setVisibility(View.VISIBLE);
         }
 
-        // ✅ CALCULATE AND DISPLAY WATER GOAL
         double waterGoal = calculateWaterGoal(user);
-        binding.tvWaterGoal.setText(String.format("Daily Water Goal: %.1f L", waterGoal));
+        binding.tvWaterGoal.setText(underlineAfterColon("Daily Water Goal", String.format("%.1f L", waterGoal)));
     }
+
 
     // ✅ COPIED & REUSED from UserDashboardActivity
     private double calculateWaterGoal(User user) {
@@ -114,6 +122,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return waterGoalLiters;
+    }
+    private SpannableString underlineAfterColon(String label, String value) {
+        String fullText = label + ": " + value;
+        SpannableString spannable = new SpannableString(fullText);
+        int start = fullText.indexOf(":") + 2; // Skip colon and space
+        spannable.setSpan(new UnderlineSpan(), start, fullText.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannable;
     }
 
     @Override

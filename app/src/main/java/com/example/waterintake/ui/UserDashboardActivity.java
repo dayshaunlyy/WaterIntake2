@@ -148,12 +148,16 @@ public class UserDashboardActivity extends AppCompatActivity {
 
             if (isChecked) {
                 binding.creatineLogo.setVisibility(View.VISIBLE);
+                binding.nocreatineLogo.setVisibility(View.GONE); // ❌ Hide the other
                 binding.creatineLogo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
             } else {
-                binding.creatineLogo.setVisibility(View.GONE);
+                binding.nocreatineLogo.setVisibility(View.VISIBLE);
+                binding.creatineLogo.setVisibility(View.GONE); // ❌ Hide the other
+                binding.nocreatineLogo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
             }
         });
     }
+
 
 
     private void setupViewByUnit() {
@@ -181,7 +185,14 @@ public class UserDashboardActivity extends AppCompatActivity {
                     binding.transferSwitch.setProgress("standard".equals(user.getUnitSystem()) ? 0 : 1);
                     binding.workoutLevelSpinner.setSelection(getWorkoutIndex(user.getWorkoutLevel()));
                     binding.creatineSwitch.setChecked(user.getUseCreatine());
-                    binding.creatineLogo.setVisibility(user.getUseCreatine() ? View.VISIBLE : View.GONE);
+                    if (user.getUseCreatine()) {
+                        binding.creatineLogo.setVisibility(View.VISIBLE);
+                        binding.nocreatineLogo.setVisibility(View.GONE);
+                    } else {
+                        binding.nocreatineLogo.setVisibility(View.VISIBLE);
+                        binding.creatineLogo.setVisibility(View.GONE);
+                    }
+
 
 
                     setupViewByUnit();
