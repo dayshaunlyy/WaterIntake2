@@ -1,8 +1,14 @@
 package com.example.waterintake.ui;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -30,18 +36,40 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Animate border background
+        LinearLayout waterGoalBox = findViewById(R.id.waterGoalBox);
+        Drawable background = waterGoalBox.getBackground();
+        if (background instanceof AnimationDrawable) {
+            AnimationDrawable animationDrawable = (AnimationDrawable) background;
+            animationDrawable.setEnterFadeDuration(200);
+            animationDrawable.setExitFadeDuration(200);
+            animationDrawable.start();
+        }
 
+        // Animate waterGoalLabel and tvWaterGoal text
+        TextView label = findViewById(R.id.waterGoalLabel);
+        TextView goal = findViewById(R.id.tvWaterGoal);
+
+        AlphaAnimation anim = new AlphaAnimation(0.3f, 1.0f);
+        anim.setDuration(500);
+        anim.setRepeatMode(AlphaAnimation.REVERSE);
+        anim.setRepeatCount(AlphaAnimation.INFINITE);
+
+        label.startAnimation(anim);
+        goal.startAnimation(anim);
+
+        // Handle intent and load user data
         int userId = getIntent().getIntExtra("userId", -1);
-
         if (userId == -1) {
             Toast.makeText(this, "Invalid User", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-        // Fetch user data from the database
         fetchUserFromDatabase(userId);
     }
+
+
 
     private void fetchUserFromDatabase(int userId) {
         executor.execute(() -> {
