@@ -10,6 +10,7 @@ import android.text.style.UnderlineSpan;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.waterintake.R;
 import com.example.waterintake.data.AppDatabase;
 import com.example.waterintake.data.entities.User;
 import com.example.waterintake.databinding.ActivityMainBinding;
@@ -87,14 +88,26 @@ public class MainActivity extends AppCompatActivity {
         binding.tvUserWorkoutLevel.setText(underlineAfterColon("Workout Level", user.getWorkoutLevel()));
 
         if (user.getUseCreatine()) {
-            binding.creatineLogo.setVisibility(View.VISIBLE);
+            binding.creatineLogo.setImageResource(R.mipmap.ic_launcher); // Creatine icon
+            binding.creatineYesNo.setText(underlineText("Yes"));
         } else {
-            binding.nocreatineLogo.setVisibility(View.VISIBLE);
+            binding.creatineLogo.setImageResource(R.mipmap.ic_logono_c); // No-creatine icon
+            binding.creatineYesNo.setText(underlineText("No"));
         }
+
+        binding.creatineLogo.setVisibility(View.VISIBLE);
+
 
         double waterGoal = calculateWaterGoal(user);
         binding.tvWaterGoal.setText(underlineAfterColon("Daily Water Goal", String.format("%.1f L", waterGoal)));
     }
+
+    private SpannableString underlineText(String text) {// helper method for underlining the text after the needed stat.
+        SpannableString spannable = new SpannableString(text);
+        spannable.setSpan(new UnderlineSpan(), 0, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        return spannable;
+    }
+
 
 
     // ✅ COPIED & REUSED from UserDashboardActivity

@@ -61,17 +61,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Creatine Label -->
-    <TextView
-        android:id="@+id/creatine"
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Takes Creatine?"
+        app:layout_constraintGuide_percent="0.5"
+        android:orientation="vertical" />
+
+    <TextView
+        android:id="@+id/creatineLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Takes Creatine?:"
         android:textColor="#00FFFF"
         android:textSize="25sp"
         app:layout_constraintTop_toBottomOf="@id/tvUserWorkoutLevel"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="24dp" />
+
+    <TextView
+        android:id="@+id/creatineYesNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yes"
+        android:textColor="#00FFFF"
+        android:textSize="25sp"
+        app:layout_constraintTop_toTopOf="@id/creatineLabel"
+        app:layout_constraintStart_toEndOf="@id/creatineLabel"
+        android:layout_marginStart="12dp"/>
+
+
+
 
     <!-- Creatine Logo -->
     <ImageView
@@ -81,7 +102,7 @@
         android:src="@mipmap/ic_launcher"
         android:visibility="gone"
         android:contentDescription="Creatine Logo BLUE"
-        app:layout_constraintTop_toBottomOf="@id/creatine"
+        app:layout_constraintTop_toBottomOf="@id/creatineLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
@@ -92,7 +113,7 @@
         android:src="@mipmap/ic_logono_c"
         android:visibility="gone"
         android:contentDescription="Creatine Logo RED"
-        app:layout_constraintTop_toBottomOf="@id/creatine"
+        app:layout_constraintTop_toBottomOf="@id/creatineLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
