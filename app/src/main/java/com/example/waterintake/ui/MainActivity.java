@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         int userId = getIntent().getIntExtra("userId", -1);
 
         if (userId == -1) {
@@ -45,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 if (user != null) {
                     displayUserData(user);
+                    binding.btnBack.setOnClickListener(v -> {
+                        Intent intent = new Intent(MainActivity.this, UserDashboardActivity.class);
+                        intent.putExtra("userId", user.getId());
+                        startActivity(intent);
+                        finish();
+                    });
                 } else {
                     Toast.makeText(MainActivity.this, "User not found", Toast.LENGTH_SHORT).show();
                 }
