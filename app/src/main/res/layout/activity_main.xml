@@ -7,99 +7,110 @@
     android:background="#000000"
     android:padding="24dp">
 
-    <!-- Height (Feet) -->
-    <EditText
-        android:id="@+id/feetInput"
+    <!-- Welcome Text -->
+    <TextView
+        android:id="@+id/tvUserName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/height_feet"
+        android:text="Welcome, User!"
         android:textColor="#00FFFF"
-        android:textColorHint="#00FFFF"
-        android:backgroundTint="#00FFFF"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp" />
 
-    <!-- Height (Inches) -->
-    <EditText
-        android:id="@+id/inchInput"
+    <!-- Height -->
+    <TextView
+        android:id="@+id/tvUserHeight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/height_inches"
+        android:text="Height: 175 cm"
         android:textColor="#00FFFF"
-        android:textColorHint="#00FFFF"
-        android:backgroundTint="#00FFFF"
-        app:layout_constraintTop_toBottomOf="@id/feetInput"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/tvUserName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="24dp" />
 
     <!-- Weight -->
-    <EditText
-        android:id="@+id/weightInput"
+    <TextView
+        android:id="@+id/tvUserWeight"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/weight_lbs_or_kg"
+        android:text="Weight: 70 kg"
         android:textColor="#00FFFF"
-        android:textColorHint="#00FFFF"
-        android:backgroundTint="#00FFFF"
-        app:layout_constraintTop_toBottomOf="@id/inchInput"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
-
-    <!-- Unit Toggle -->
-    <ToggleButton
-        android:id="@+id/unitToggle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textOn="@string/kg"
-        android:textOff="@string/lbs"
-        android:textColor="#00FFFF"
-        android:backgroundTint="#222222"
-        app:layout_constraintTop_toBottomOf="@id/weightInput"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/tvUserHeight"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Calculate Button -->
+    <!-- Workout Level -->
+    <TextView
+        android:id="@+id/tvUserWorkoutLevel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Workout Level: Moderate"
+        android:textColor="#00FFFF"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/tvUserWeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Creatine Label -->
+    <TextView
+        android:id="@+id/creatine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Takes Creatine?"
+        android:textColor="#00FFFF"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/tvUserWorkoutLevel"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <!-- Creatine Logo -->
+    <ImageView
+        android:id="@+id/creatineLogo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone"
+        android:contentDescription="Creatine Logo"
+        app:layout_constraintTop_toBottomOf="@id/creatine"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Water Goal -->
+    <TextView
+        android:id="@+id/tvWaterGoal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Daily Water Goal: 2.5 L"
+        android:textColor="#00FFFF"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/creatineLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <!-- Back Button -->
     <Button
-        android:id="@+id/calcBtn"
-        android:layout_width="0dp"
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calculate"
-        android:textColor="#000000"
+        android:text="Back"
         android:backgroundTint="#00FFFF"
-        app:layout_constraintTop_toBottomOf="@id/unitToggle"
+        android:textColor="#000000"
+        app:layout_constraintTop_toBottomOf="@id/tvWaterGoal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
-
-    <!-- Total Water Text -->
-    <TextView
-        android:id="@+id/totalWaterText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Total:"
-        android:textColor="#00FFFF"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/calcBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
-
-    <!-- Hourly Water Text -->
-    <TextView
-        android:id="@+id/hourlyWaterText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Hourly:"
-        android:textColor="#00FFFF"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/totalWaterText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
-
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="24dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

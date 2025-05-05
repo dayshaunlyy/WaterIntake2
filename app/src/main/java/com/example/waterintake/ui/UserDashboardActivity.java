@@ -323,6 +323,12 @@ public class UserDashboardActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 Toast.makeText(this, "Profile Updated!", Toast.LENGTH_SHORT).show();
                 binding.btnEditProfile.setEnabled(true);
+
+                Intent intent = new Intent(UserDashboardActivity.this, MainActivity.class);
+                intent.putExtra("userId", user.getId()); // if MainActivity needs user ID
+                startActivity(intent);
+                finish();
+
             });
         });
     }
