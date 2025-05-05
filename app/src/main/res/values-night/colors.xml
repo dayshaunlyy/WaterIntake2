@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="light_background">#FFFFFF</color> <!-- fallback -->
+    <color name="dark_background">#121212</color>
+
+    <!-- Optional: Theme colors -->
+    <color name="colorPrimary">#00FFFF</color>
+    <color name="colorOnPrimary">#000000</color>
+</resources>
