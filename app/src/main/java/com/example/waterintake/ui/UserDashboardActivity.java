@@ -51,14 +51,27 @@ public class UserDashboardActivity extends AppCompatActivity {
 
         loadUserDetails(userId);
 
-        // ✅ Set up Workout Level Spinner Adapter
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.workout_levels,
-                android.R.layout.simple_spinner_item
-        );
+        // Display full labels, but store short values
+        String[] workoutLevelsDisplay = getResources().getStringArray(R.array.workout_levels_display);
+        String[] workoutLevelsValues = getResources().getStringArray(R.array.workout_levels_values);
+
+        // Set up the adapter with full labels
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, workoutLevelsDisplay);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.workoutLevelSpinner.setAdapter(adapter);
+
+        // Pre-select based on user's saved value (e.g., "High")
+        if (user != null) {
+            int index = 0;
+            for (int i = 0; i < workoutLevelsValues.length; i++) {
+                if (workoutLevelsValues[i].equals(user.getWorkoutLevel())) {
+                    index = i;
+                    break;
+                }
+            }
+            binding.workoutLevelSpinner.setSelection(index);
+        }
+
 
         binding.btnEditProfile.setOnClickListener(v -> saveChanges());
 
@@ -298,8 +311,9 @@ public class UserDashboardActivity extends AppCompatActivity {
         user.setWeight(weightKg);
         user.setUseCreatine(binding.creatineSwitch.isChecked());
 
-        String selectedWorkoutLevel = binding.workoutLevelSpinner.getSelectedItem().toString();
-        user.setWorkoutLevel(selectedWorkoutLevel);
+        int selectedIndex = binding.workoutLevelSpinner.getSelectedItemPosition();
+        String[] workoutLevelsValues = getResources().getStringArray(R.array.workout_levels_values);
+        user.setWorkoutLevel(workoutLevelsValues[selectedIndex]);
 
         binding.btnEditProfile.setEnabled(false);
 
