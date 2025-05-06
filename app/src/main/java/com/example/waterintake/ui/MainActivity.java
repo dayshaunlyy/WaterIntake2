@@ -1,6 +1,7 @@
 package com.example.waterintake.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.waterintake.R;
 import com.example.waterintake.data.AppDatabase;
@@ -32,7 +34,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
+        boolean isDarkMode = preferences.getBoolean("dark_mode", true);
+        AppCompatDelegate.setDefaultNightMode(
+                isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
+        );
+
+        super.onCreate(savedInstanceState); // Must be AFTER setting night mode
+
+        // Continue with your setup
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -68,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         fetchUserFromDatabase(userId);
     }
+
 
 
 

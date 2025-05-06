@@ -17,7 +17,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Load preferences before setting the theme
         SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
 
         if (!preferences.contains("dark_mode")) {
