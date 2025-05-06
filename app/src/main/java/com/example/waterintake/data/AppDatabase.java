@@ -23,6 +23,8 @@ import java.util.concurrent.Executors;
 @TypeConverters(LocalDateTimeConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
+    public abstract DrinkLogDao drinkLogDao();
+
     private static volatile AppDatabase instance;
     private static final int NUMBER_OF_THREADS = 4;
     public static final ExecutorService databaseWriteExecutor =
@@ -94,10 +96,6 @@ public abstract class AppDatabase extends RoomDatabase {
                     "`timestamp` TEXT)");
         }
     };
-
-
-    // registers DAO in the database
-    public abstract DrinkLogDao drinkLogDao();
 
 
 

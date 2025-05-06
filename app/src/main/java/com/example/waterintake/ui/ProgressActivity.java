@@ -50,6 +50,13 @@ public class ProgressActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             }
+            else if (id == R.id.nav_log_water) {
+                Intent intent = new Intent(ProgressActivity.this, WaterInputActivity.class);
+                intent.putExtra("userId", userId);
+                startActivityForResult(intent, 101);
+                return true;
+            }
+
             return false;
         });
 

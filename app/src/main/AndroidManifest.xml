@@ -29,6 +29,7 @@
         <activity android:name=".ui.SignUpActivity" />
         <activity android:name=".ui.AdminDashboardActivity" />
         <activity android:name=".ui.ProgressActivity" />
+        <activity android:name=".ui.WaterInputActivity" />
 
     </application>
 
