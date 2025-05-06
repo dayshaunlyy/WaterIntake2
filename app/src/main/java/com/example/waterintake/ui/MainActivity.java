@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void displayUserData(User user) {
-        binding.tvUserName.setText(user.getUsername() + " Stats");
+        binding.tvUserName.setText(user.getUsername() + "'s Stats");
 
         String heightText;
         String weightText;
@@ -125,12 +125,28 @@ public class MainActivity extends AppCompatActivity {
 
         binding.creatineLogo.setVisibility(View.VISIBLE);
 
-
+        // Calculate water goal
         double waterGoal = calculateWaterGoal(user);
         binding.tvWaterGoal.setText(underlineText(String.format("%.1f L", waterGoal)));
 
+        // Update total intake
+        user.setTotalIntake(waterGoal); // Set the total intake to the calculated value
 
+        // Save updated user data
+        updateUserInDatabase(user); // Save updated user (with new totalIntake)
     }
+
+    private void updateUserInDatabase(User user) {
+        executor.execute(() -> {
+            // Update the user in the database
+            AppDatabase.getInstance(MainActivity.this).userDao().updateUser(user);
+            runOnUiThread(() -> {
+                // You can show a success message or handle other UI updates
+                Toast.makeText(MainActivity.this, "User data updated!", Toast.LENGTH_SHORT).show();
+            });
+        });
+    }
+
 
     private SpannableString underlineText(String text) {// helper method for underlining the text after the needed stat.
         SpannableString spannable = new SpannableString(text);
