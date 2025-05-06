@@ -10,6 +10,7 @@ import java.util.List;
 
 @Dao
 public interface DrinkLogDao {
+
     @Insert
     void insert(DrinkLogEntry entry);
 
@@ -18,5 +19,4 @@ public interface DrinkLogDao {
 
     @Query("SELECT SUM(amount_ml) FROM drink_log WHERE user_id = :userId AND date(timestamp) = date('now')")
     Double getTodayIntake(int userId);
-
 }
