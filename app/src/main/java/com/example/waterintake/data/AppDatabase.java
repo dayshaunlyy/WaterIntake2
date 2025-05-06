@@ -16,7 +16,7 @@ import com.example.waterintake.data.entities.DrinkLogEntry;
 import com.example.waterintake.util.LocalDateTimeConverter;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.Executors; //
 
 
 @Database(entities = {User.class, DrinkLogEntry.class}, version = 4, exportSchema = false)
