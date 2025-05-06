@@ -91,6 +91,14 @@ public class UserDashboardActivity extends AppCompatActivity {
                 return true;
             }
 
+            else if (id == R.id.nav_log_water) {
+                Intent intent = new Intent(UserDashboardActivity.this, WaterInputActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+                return true;
+            }
+
+
             return false;
         });
 
