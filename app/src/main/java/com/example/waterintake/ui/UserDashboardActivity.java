@@ -1,17 +1,17 @@
 package com.example.waterintake.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.AdapterView;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -28,6 +28,8 @@ public class UserDashboardActivity extends AppCompatActivity {
     private ActivityUserDashboardBinding binding;
     private User user;
     private final ExecutorService executor = Executors.newSingleThreadExecutor(); // ✅ More efficient
+    private Switch yourSwitch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,124 +43,127 @@ public class UserDashboardActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid User", Toast.LENGTH_SHORT).show();
             finish();
             return;
+
         }
+
+        yourSwitch = findViewById(R.id.transferSwitch);
+        setupSwitch();
 
         loadUserDetails(userId);
 
         // ✅ Set up Workout Level Spinner Adapter
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
-                R.layout.spinner_item,
-                R.id.spinnerText,
-                getResources().getStringArray(R.array.workout_levels)
-        ) {
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                // Standard spinner item view
-                View view = super.getView(position, convertView, parent);
-                String level = getItem(position).toString();
-                int color = getColorForLevel(level);
-                view.setBackgroundColor(color); // Set background color based on workout level
-                return view;
-            }
-
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                // Drop-down view (the list shown when clicking the spinner)
-                View view = super.getDropDownView(position, convertView, parent);
-                String level = getItem(position).toString();
-                int color = getColorForLevel(level);
-                view.setBackgroundColor(color); // Set background color for each dropdown item
-                return view;
-            }
-        };
-
-        adapter.setDropDownViewResource(R.layout.spinner_item);
+                R.array.workout_levels,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.workoutLevelSpinner.setAdapter(adapter);
-
 
         binding.btnEditProfile.setOnClickListener(v -> saveChanges());
         binding.btnLogout.setOnClickListener(v -> {
-            Intent intent = new Intent(UserDashboardActivity.this, LoginActivity.class); // Replace with your login activity class
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear back stack
+            SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+            prefs.edit().clear().apply();
+
+            Intent intent = new Intent(UserDashboardActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
-            finish();
         });
 
-        setupSeekBar();
+        setupSwitch();
         setupCreatineSwitch();
         setupWorkoutSpinner();
 
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
 
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
 
-        findViewById(R.id.btnSettings).setOnClickListener(v -> {
-            Intent intent = new Intent(UserDashboardActivity.this, SettingsActivity.class);
-            startActivity(intent);
+            if (id == R.id.nav_progress) {
+                Intent progressIntent = new Intent(UserDashboardActivity.this, ProgressActivity.class);
+                progressIntent.putExtra("userId", user.getId());
+                startActivity(progressIntent);
+                return true;
+
+            } else if (id == R.id.nav_dashboard) {
+                Toast.makeText(this, "You're already on the Dashboard", Toast.LENGTH_SHORT).show();
+                return true;
+
+            } else if (id == R.id.nav_logout) {
+                SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+                prefs.edit().clear().apply();
+
+                Intent intent = new Intent(UserDashboardActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                return true;
+            }
+
+            return false;
         });
 
-    }
 
-    private boolean isSpinnerInitialized = false;
+
+    }
 
     private void setupWorkoutSpinner() {
         binding.workoutLevelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (isSpinnerInitialized) {
-                    String selectedWorkoutLevel = parent.getItemAtPosition(position).toString();
-                    Toast.makeText(UserDashboardActivity.this, "Workout Level: " + selectedWorkoutLevel, Toast.LENGTH_SHORT).show();
-                } else {
-                    isSpinnerInitialized = true;
+                String selectedWorkoutLevel = parent.getItemAtPosition(position).toString();
+
+                // ✅ Change background color based on selection
+                switch (selectedWorkoutLevel) {
+                    case "High":
+                        binding.workoutLevelSpinner.setBackgroundColor(ContextCompat.getColor(UserDashboardActivity.this, android.R.color.holo_red_light));
+                        break;
+                    case "Moderate":
+                        binding.workoutLevelSpinner.setBackgroundColor(ContextCompat.getColor(UserDashboardActivity.this, android.R.color.holo_orange_light));
+                        break;
+                    case "Light":
+                        binding.workoutLevelSpinner.setBackgroundColor(ContextCompat.getColor(UserDashboardActivity.this, android.R.color.holo_green_light));
+                        break;
+                    case "Sedentary":
+                        binding.workoutLevelSpinner.setBackgroundColor(ContextCompat.getColor(UserDashboardActivity.this, android.R.color.holo_blue_light));
+                        break;
+                    default:
+                        binding.workoutLevelSpinner.setBackgroundColor(ContextCompat.getColor(UserDashboardActivity.this, android.R.color.darker_gray));
+                        break;
                 }
+
+                // Optional: Toast showing selected
+                Toast.makeText(UserDashboardActivity.this, "Workout Level: " + selectedWorkoutLevel, Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
-        });
-    }
-
-
-
-    private void setupSeekBar() {
-        binding.transferSwitch.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress == 0) {
-                    if (user != null) user.setUnitSystem("standard");
-                } else {
-                    if (user != null) user.setUnitSystem("metric");
-                }
-                setupViewByUnit();
-                prefillHeightWeight();
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
             }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
     }
+
+    private void setupSwitch() {
+        yourSwitch.setOnCheckedChangeListener((buttonView, isCheckedVal) -> {
+            if (user != null) {
+                if (isCheckedVal) {
+                    user.setUnitSystem("metric");
+                } else {
+                    user.setUnitSystem("standard");
+                }
+            }
+            setupViewByUnit();
+            prefillHeightWeight();
+        });
+    }
+
 
     private void setupCreatineSwitch() {
-        binding.creatineSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        binding.creatineSwitch.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
             if (user != null) {
                 user.setUseCreatine(isChecked);
             }
-
-            if (isChecked) {
-                binding.creatineLogo.setVisibility(View.VISIBLE);
-                binding.nocreatineLogo.setVisibility(View.GONE); // ❌ Hide the other
-                binding.creatineLogo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
-            } else {
-                binding.nocreatineLogo.setVisibility(View.VISIBLE);
-                binding.creatineLogo.setVisibility(View.GONE); // ❌ Hide the other
-                binding.nocreatineLogo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
-            }
         });
     }
-
-
 
     private void setupViewByUnit() {
         if (user == null) return;
@@ -182,18 +187,9 @@ public class UserDashboardActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 if (user != null) {
                     binding.tvUserName.setText("Welcome, " + user.getUsername() + "!");
-                    binding.transferSwitch.setProgress("standard".equals(user.getUnitSystem()) ? 0 : 1);
-                    binding.workoutLevelSpinner.setSelection(getWorkoutIndex(user.getWorkoutLevel()));
+                    binding.transferSwitch.setChecked("standard".equals(user.getUnitSystem()));
                     binding.creatineSwitch.setChecked(user.getUseCreatine());
-                    if (user.getUseCreatine()) {
-                        binding.creatineLogo.setVisibility(View.VISIBLE);
-                        binding.nocreatineLogo.setVisibility(View.GONE);
-                    } else {
-                        binding.nocreatineLogo.setVisibility(View.VISIBLE);
-                        binding.creatineLogo.setVisibility(View.GONE);
-                    }
-
-
+                    binding.workoutLevelSpinner.setSelection(getWorkoutIndex(user.getWorkoutLevel()));
 
                     setupViewByUnit();
                     prefillHeightWeight();
@@ -233,21 +229,17 @@ public class UserDashboardActivity extends AppCompatActivity {
         }
 
         switch (user.getWorkoutLevel()) {
-            case "High (6–7 times a week)":
+            case "High":
                 waterGoalLiters *= 1.115;
                 break;
-
-            case "Moderate (3–5 times a week)":
+            case "Moderate":
                 break;
-
-            case "Light (1–3 times a week)":
+            case "Light":
                 waterGoalLiters *= 0.885;
                 break;
-
-            case "Sedentary (little/no exercise)":
+            case "Sedentary":
                 waterGoalLiters *= 0.77;
                 break;
-
             default:
                 break;
         }
@@ -257,29 +249,12 @@ public class UserDashboardActivity extends AppCompatActivity {
 
     private int getWorkoutIndex(String level) {
         switch (level) {
-            case "High (6–7 times a week)": return 0;
-            case "Moderate (3–5 times a week)": return 1;
-            case "Light (1–3 times a week)": return 2;
-            case "Sedentary (little/no exercise)": return 3;
+            case "High": return 0;
+            case "Light": return 2;
+            case "Sedentary": return 3;
             default: return 1;
         }
     }
-
-    private int getColorForLevel(String level) {
-        switch (level) {
-            case "High (6–7 times a week)":
-                return ContextCompat.getColor(this, R.color.workout_high);
-            case "Moderate (3–5 times a week)":
-                return ContextCompat.getColor(this, R.color.workout_moderate);
-            case "Light (1–3 times a week)":
-                return ContextCompat.getColor(this, R.color.workout_light);
-            case "Sedentary (little/no exercise)":
-                return ContextCompat.getColor(this, R.color.workout_sedentary);
-            default:
-                return ContextCompat.getColor(this, android.R.color.darker_gray); // fallback
-        }
-    }
-
 
     private void saveChanges() {
         double heightCm = 0;
@@ -334,12 +309,6 @@ public class UserDashboardActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 Toast.makeText(this, "Profile Updated!", Toast.LENGTH_SHORT).show();
                 binding.btnEditProfile.setEnabled(true);
-
-                Intent intent = new Intent(UserDashboardActivity.this, MainActivity.class);
-                intent.putExtra("userId", user.getId()); // if MainActivity needs user ID
-                startActivity(intent);
-                finish();
-
             });
         });
     }

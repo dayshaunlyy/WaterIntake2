@@ -28,9 +28,8 @@
         <activity android:name=".ui.UserDashboardActivity" />
         <activity android:name=".ui.SignUpActivity" />
         <activity android:name=".ui.AdminDashboardActivity" />
-        <activity android:name=".ui.SettingsActivity" />
-        <activity android:name=".ui.MainActivity"/>
+        <activity android:name=".ui.ProgressActivity" />
+
     </application>
 
 </manifest>
-
