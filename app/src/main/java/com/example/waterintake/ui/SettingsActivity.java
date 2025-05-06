@@ -1,5 +1,6 @@
 package com.example.waterintake.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -16,21 +17,19 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         // Load preferences before setting the theme
         SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
 
-        // Set default to dark mode on first launch
         if (!preferences.contains("dark_mode")) {
-            preferences.edit().putBoolean("dark_mode", true).apply();
+            preferences.edit().putBoolean("dark_mode", true).apply(); // Default to dark
         }
 
-        boolean isDarkMode = preferences.getBoolean("dark_mode", true); // Default: dark
+        boolean isDarkMode = preferences.getBoolean("dark_mode", true);
         AppCompatDelegate.setDefaultNightMode(
                 isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
         );
 
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
         // Setup toolbar with back button
@@ -40,16 +39,24 @@ public class SettingsActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        // Reference the switch
+        // Theme switch logic
         themeSwitch = findViewById(R.id.themeSwitch);
         themeSwitch.setChecked(isDarkMode);
 
-        // Listen for toggle changes
         themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             preferences.edit().putBoolean("dark_mode", isChecked).apply();
             AppCompatDelegate.setDefaultNightMode(
                     isChecked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
             );
+
+            // Restart app to apply theme change across all activities
+            Intent intent = getBaseContext().getPackageManager()
+                    .getLaunchIntentForPackage(getBaseContext().getPackageName());
+            if (intent != null) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finishAffinity(); // Close all activities
+            }
         });
     }
 
