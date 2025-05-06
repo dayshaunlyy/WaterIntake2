@@ -84,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     });
+                    binding.btnInputSleepSchedule.setOnClickListener(v -> {
+                        Intent intent = new Intent(MainActivity.this, sleepInputActivity.class);
+                        intent.putExtra("userId", user.getId());
+                        startActivity(intent);
+                    });
                 } else {
                     Toast.makeText(MainActivity.this, "User not found", Toast.LENGTH_SHORT).show();
                 }

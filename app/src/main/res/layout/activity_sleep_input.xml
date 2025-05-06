@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sleepInputRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="#000000"
+    android:gravity="center_horizontal">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculate Hourly Water Intake"
+        android:textColor="#00FFFF"
+        android:textSize="28sp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
+    <!-- Wake Up Time -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wake Up Time"
+        android:textColor="#00FFFF"
+        android:textSize="22sp"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/neon_border"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <Spinner
+            android:id="@+id/spinnerWakeHour"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:backgroundTint="#00FFFF"
+            android:popupBackground="#00FFFF" />
+
+        <Spinner
+            android:id="@+id/spinnerWakePeriod"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#00FFFF"
+            android:popupBackground="#00FFFF" />
+    </LinearLayout>
+
+    <!-- Bed Time -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bed Time"
+        android:textColor="#00FFFF"
+        android:textSize="22sp"
+        android:layout_marginTop="24dp"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/neon_border"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
+        <Spinner
+            android:id="@+id/spinnerSleepHour"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:backgroundTint="#00FFFF"
+            android:popupBackground="#00FFFF" />
+
+        <Spinner
+            android:id="@+id/spinnerSleepPeriod"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#00FFFF"
+            android:popupBackground="#00FFFF" />
+    </LinearLayout>
+
+    <!-- Waking Hours Box -->
+    <LinearLayout
+        android:id="@+id/wakingHoursBox"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/neon_border"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvWakingHoursLabel"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Waking Hours"
+            android:textColor="#00FFFF"
+            android:textSize="23sp" />
+
+        <TextView
+            android:id="@+id/tvWakingHours"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="--"
+            android:textColor="#00FFFF"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Hourly Intake Shimmer Box -->
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:shimmer_auto_start="true"
+        app:shimmer_duration="3000"
+        app:shimmer_base_alpha="1"
+        app:shimmer_highlight_alpha="2.0">
+
+        <LinearLayout
+            android:id="@+id/hourlyIntakeBox"
+            android:layout_width="250dp"
+            android:layout_height="150dp"
+            android:background="@drawable/neon_border"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/hourlyIntakeLabel"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Hourly Water Goal"
+                android:textColor="#00FFFF"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/tvHourlyIntake"
+                android:layout_width="220dp"
+                android:layout_height="73dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="--"
+                android:textColor="#00FFFF"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+</LinearLayout>
