@@ -14,7 +14,7 @@ import com.example.waterintake.data.entities.User;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class}, version = 3, exportSchema = false)// ✅ bump version to 2
+@Database(entities = {User.class}, version = 4, exportSchema = false)// ✅ bump version to 2
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase instance;
@@ -30,7 +30,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "water_intake_database")
-                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3) // ✅ Add both migrations
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4) // ✅ Add both migrations
                             .addCallback(roomCallback)
                             .build();
 
@@ -55,7 +55,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 sampleUser.setUnitSystem("metric");
                 sampleUser.setWorkoutLevel("Moderate");
                 sampleUser.setUseCreatine(false);
-
+                sampleUser.setTotalIntake(0); // Initialize totalIntake to 0
 
                 userDao.insert(sampleUser);
             });
@@ -74,6 +74,13 @@ public abstract class AppDatabase extends RoomDatabase {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE users ADD COLUMN workoutLevel TEXT DEFAULT 'Moderate'");
+        }
+    };
+    static final Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            // Add the new column totalIntake to the users table
+            database.execSQL("ALTER TABLE users ADD COLUMN totalIntake REAL NOT NULL DEFAULT 0");
         }
     };
 
