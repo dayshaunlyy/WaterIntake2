@@ -2,7 +2,6 @@ package com.example.waterintake.ui;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.DecelerateInterpolator;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.waterintake.R;
 import com.example.waterintake.data.AppDatabase;
@@ -40,11 +38,6 @@ public class ProgressActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
-        boolean isDarkMode = preferences.getBoolean("dark_mode", true);
-        AppCompatDelegate.setDefaultNightMode(
-                isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
-        );
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
 
@@ -71,6 +64,7 @@ public class ProgressActivity extends AppCompatActivity {
                 if (user != null) {
                     totalIntake = user.getTotalIntake();
                     hourlyIntake = user.getHourlyIntake();
+                    currentIntake = user.getCurrentIntake();
                     runOnUiThread(this::updateProgressDisplay);
                 } else {
                     runOnUiThread(() -> Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show());
@@ -82,15 +76,30 @@ public class ProgressActivity extends AppCompatActivity {
         btnAddWater.setOnClickListener(v -> {
             if (currentIntake + hourlyIntake <= totalIntake) {
                 currentIntake += hourlyIntake;
+                user.setCurrentIntake(currentIntake); // Save to user object
+
+                executor.execute(() -> {
+                    AppDatabase.getInstance(this).userDao().updateUser(user); // Persist it
+                });
+
                 updateProgressDisplay();
             }
         });
 
+
         // Reset button
         btnReset.setOnClickListener(v -> {
             currentIntake = 0;
+            user.setCurrentIntake(currentIntake);
+
+            executor.execute(() -> {
+                AppDatabase.getInstance(this).userDao().updateUser(user);
+            });
+
             updateProgressDisplay();
         });
+
+
 
         // Settings button
         btnSettings.setOnClickListener(v -> {
@@ -152,7 +161,17 @@ public class ProgressActivity extends AppCompatActivity {
                     .start();
         }, 3000); // Delay for 5000 milliseconds (5 seconds)
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        // Save the current screen and user ID into SharedPreferences
+        getSharedPreferences("AppPrefs", MODE_PRIVATE)
+                .edit()
+                .putString("lastScreen", "progress")
+                .putInt("lastUserId", userId)
+                .apply();
+    }
 
 
     @Override
@@ -162,3 +181,4 @@ public class ProgressActivity extends AppCompatActivity {
         executor.shutdown();
     }
 }
+

@@ -14,7 +14,7 @@ import com.example.waterintake.data.entities.User;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class}, version = 5, exportSchema = false)// now 5
+@Database(entities = {User.class}, version = 6, exportSchema = false)// now 5
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase instance;
@@ -30,7 +30,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "water_intake_database")
-                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5) // ✅ Add both migrations
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6) // ✅ Add both migrations
                             .addCallback(roomCallback)
                             .build();
 
@@ -55,7 +55,8 @@ public abstract class AppDatabase extends RoomDatabase {
                 sampleUser.setUnitSystem("metric");
                 sampleUser.setWorkoutLevel("Moderate");
                 sampleUser.setUseCreatine(false);
-                sampleUser.setTotalIntake(0); // Initialize totalIntake to 0
+                sampleUser.setTotalIntake(0);
+                // Initialize totalIntake to 0
 
                 userDao.insert(sampleUser);
             });
@@ -69,7 +70,7 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
-//migration for workout level
+    //migration for workout level
     static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
@@ -88,6 +89,14 @@ public abstract class AppDatabase extends RoomDatabase {
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE users ADD COLUMN wakingHours REAL NOT NULL DEFAULT 0");
             database.execSQL("ALTER TABLE users ADD COLUMN hourlyIntake REAL NOT NULL DEFAULT 0");
+        }
+    };
+
+    static final Migration MIGRATION_5_6 = new Migration(5, 6) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE users ADD COLUMN currentIntake REAL NOT NULL DEFAULT 0");
+
         }
     };
 
