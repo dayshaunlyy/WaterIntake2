@@ -32,6 +32,7 @@
         <activity android:name=".ui.MainActivity"/>
         <activity android:name=".ui.sleepInputActivity"/>
         <activity android:name=".ui.ProgressActivity"/>
+        <activity android:name=".ui.WaterInputActivity" />
     </application>
 
 </manifest>

@@ -20,6 +20,10 @@
         <item>Light (1–3 times a week)</item>
         <item>Sedentary (little/no exercise)</item>
     </string-array>
-
+    <string name="user_dashboard_title">User Dashboard</string>
+    <string name="enter_height">Enter Height</string>
+    <string name="enter_weight">Enter Weight</string>
+    <string name="use_creatine">Use Creatine</string>
+    <string name="save">Save</string>
 </resources>
 

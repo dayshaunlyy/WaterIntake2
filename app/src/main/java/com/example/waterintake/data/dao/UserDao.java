@@ -12,6 +12,9 @@ import com.example.waterintake.data.entities.User;
 @Dao
 public interface UserDao {
 
+    @androidx.room.Update
+    void update(User user);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);
 
@@ -32,4 +35,8 @@ public interface UserDao {
 
     @Query("DELETE FROM users WHERE id = :userId")
     void deleteUserById(int userId);
+
+    @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
+    User getUserByUsername(String username);
+
 }

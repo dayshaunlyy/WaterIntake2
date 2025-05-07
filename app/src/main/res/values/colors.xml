@@ -7,14 +7,13 @@
     <color name="workout_light">#2E98E4</color>
     <color name="workout_sedentary">#00FFFF</color>
 
-
-
     <color name="light_background">#FFFFFF</color>
     <color name="dark_background">#121212</color>
     <color name="colorPrimary">#00FFFF</color>
     <color name="colorOnPrimary">#FFFFFF</color>
 
-
     <color name="neonBlue">#00FFFF</color>
 
+    <color name="teal_200">#03DAC5</color>
+    <color name="teal_700">#018786</color>
 </resources>

@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         binding.tvUserWeight.setText(underlineAfterColon("Weight", weightText));
         binding.tvUserWorkoutLevel.setText(underlineAfterColon("Workout Level", user.getWorkoutLevel()));
 
-        if (user.getUseCreatine()) {
+        if (user.isUseCreatine()) {
             binding.creatineLogo.setImageResource(R.mipmap.ic_launcher); // Creatine icon
             binding.creatineYesNo.setText(underlineText("Yes"));
         } else {
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
 
         double waterGoalLiters = user.getWeight() * 0.033;
 
-        if (user.getUseCreatine()) {
+        if (user.isUseCreatine()) {
             waterGoalLiters *= 1.3;
         }
 
