@@ -8,15 +8,18 @@
     android:padding="24dp"
     android:background="?android:attr/windowBackground">
 
+    <!-- Updated Toolbar with theme-aware styling -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/settingsToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/black"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:title="Settings"
-        android:titleTextColor="@android:color/white"
+        android:titleTextColor="?android:textColorPrimary"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+    <!-- TextView title -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,12 +27,16 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="24dp"
+        android:textColor="?android:textColorPrimary" />
 
+    <!-- Dark Mode switch -->
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/themeSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dark Mode"
-        android:textSize="16sp" />
+        android:text="Light/Dark Mode"
+        android:textSize="16sp"
+        android:textColor="?android:textColorPrimary" />
+
 </LinearLayout>

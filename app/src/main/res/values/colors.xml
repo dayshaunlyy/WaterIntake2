@@ -7,11 +7,20 @@
     <color name="workout_light">#2E98E4</color>
     <color name="workout_sedentary">#00FFFF</color>
 
-
-
+    <!-- Override for dark mode -->
     <color name="light_background">#FFFFFF</color>
     <color name="dark_background">#121212</color>
+    <color name="background">#FFFFFF</color>
+
+
     <color name="colorPrimary">#00FFFF</color>
-    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorOnPrimary">#000000</color>
+
+    <color name="edittext_background">#FFFFFF</color>
+    <color name="edittext_border">#00FFFF</color>
+
+    <color name="neon_box_background">#FFFFFF</color> <!-- or #E0FFFF for neon feel -->
+    <color name="neon_border">#00FFFF</color>
+
 
 </resources>
