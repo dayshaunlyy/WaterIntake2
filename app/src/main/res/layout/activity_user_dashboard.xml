@@ -1,289 +1,241 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    android:padding="24dp"
-    android:visibility="visible"
-    tools:context=".ui.UserDashboardActivity"
-    tools:visibility="visible">
+    android:background="?android:attr/windowBackground"
+    android:padding="24dp">
 
-    <!-- Welcome Username TextView -->
-
-    <!-- Unit Toggle Layout -->
-
-    <!-- Weight input -->
-
-    <!-- Metric Height (cm) -->
-
-    <!-- Standard Height Layout (Feet + Inches) -->
-
+    <!-- Welcome Text -->
     <TextView
         android:id="@+id/tvUserName"
-        android:layout_width="366dp"
-        android:layout_height="39dp"
-        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Welcome, User!"
-        android:textColor="#00FFFF"
+        android:textColor="?android:textColorPrimary"
         android:textSize="28sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="-4dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Unit Toggle Layout -->
     <LinearLayout
         android:id="@+id/unitToggleLayout"
-        android:layout_width="395dp"
-        android:layout_height="74dp"
-        android:layout_marginTop="4dp"
-        android:background="#000000"
-        android:gravity="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/tvUserName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvUserName">
-
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp">
 
         <TextView
             android:id="@+id/textStandard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:text="Standard"
-            android:textColor="#00FFFF"
+            android:textColor="?android:textColorPrimary"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:padding="8dp" />
 
         <Switch
             android:id="@+id/transferSwitch"
             android:layout_width="wrap_content"
-            android:layout_height="106dp"
-            android:layout_marginTop="16dp"
-            android:checked="false"
-            android:minWidth="48dp"
-            android:minHeight="48dp"
-            android:textColor="#00FFFF"
-            android:textOff="lbs"
+            android:layout_height="wrap_content"
             android:textOn="kg"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etUserWeight" />
+            android:textOff="lbs"
+            android:textColor="?android:textColorPrimary" />
 
         <TextView
             android:id="@+id/textMetric"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
             android:text="Metric"
-            android:textColor="#00FFFF"
-            android:textSize="18sp" />
+            android:textColor="?android:textColorPrimary"
+            android:textSize="18sp"
+            android:padding="8dp" />
     </LinearLayout>
 
+    <!-- Weight Label -->
+    <TextView
+        android:id="@+id/EnterWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weight"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/unitToggleLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <!-- Weight Input -->
     <EditText
         android:id="@+id/etUserWeight"
-        android:layout_width="310dp"
-        android:layout_height="37dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/rounded_edittext"
-        android:gravity="center_vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:hint="Weight (kg)"
         android:inputType="numberDecimal"
         android:minHeight="50dp"
-        android:textColor="#00FFFF"
-        android:textColorHint="#00FFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        android:background="@drawable/rounded_edittext"
+        android:textColor="?android:textColorPrimary"
+        android:textColorHint="?android:textColorHint"
+        app:layout_constraintTop_toBottomOf="@id/EnterWeight"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/EnterWeight" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
 
+    <!-- Height Label -->
+    <TextView
+        android:id="@+id/EnterHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Height"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/etUserWeight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <!-- Height Input (Metric) -->
     <EditText
         android:id="@+id/etUserHeightCm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/rounded_edittext"
-        android:gravity="center_vertical"
         android:hint="Height (cm)"
         android:inputType="numberDecimal"
         android:minHeight="50dp"
-        android:textColor="#00FFFF"
-        android:textColorHint="#00FFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:background="@drawable/rounded_edittext"
+        android:textColor="?android:textColorPrimary"
+        android:textColorHint="?android:textColorHint"
+        app:layout_constraintTop_toBottomOf="@id/EnterHeight"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/EnterHeight" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
 
+    <!-- Standard Height Layout -->
     <LinearLayout
         android:id="@+id/standardHeightLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
         android:orientation="horizontal"
+        android:gravity="center"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/EnterHeight"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/EnterHeight">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp">
 
         <EditText
             android:id="@+id/etUserFeet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="0dp"
             android:layout_weight="1"
-            android:background="@drawable/rounded_edittext"
-            android:gravity="center_vertical"
             android:hint="Feet"
             android:inputType="numberDecimal"
             android:minHeight="50dp"
-            android:textColor="#00FFFF"
-            android:textColorHint="#00FFFF" />
+            android:background="@drawable/rounded_edittext"
+            android:textColor="?android:textColorPrimary"
+            android:textColorHint="?android:textColorHint" />
 
         <EditText
             android:id="@+id/etUserInches"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/rounded_edittext"
-            android:gravity="center_vertical"
             android:hint="Inches"
             android:inputType="numberDecimal"
             android:minHeight="50dp"
-            android:textColor="#00FFFF"
-            android:textColorHint="#00FFFF" />
+            android:background="@drawable/rounded_edittext"
+            android:textColor="?android:textColorPrimary"
+            android:textColorHint="?android:textColorHint" />
     </LinearLayout>
 
-    <!-- Enter Weight and Enter Height labels -->
-
-
-    <!-- Creatine Label -->
-
-
-    <TextView
-        android:id="@+id/EnterWeight"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:gravity="center"
-        android:text="Weight"
-        android:textColor="#00FFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/unitToggleLayout" />
-
-    <TextView
-        android:id="@+id/EnterHeight"
-        android:layout_width="342dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="36dp"
-        android:gravity="center"
-        android:text="Height"
-        android:textColor="#00FFFF"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/etUserWeight" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/heightBarrier"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="etUserHeightCm,standardHeightLayout"
-        app:barrierAllowsGoneWidgets="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+    <!-- Workout Level Label -->
     <TextView
         android:id="@+id/workoutLevelLabel"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
         android:text="Workout Level"
-        android:textColor="#00FFFF"
+        android:textColor="?android:textColorPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/standardHeightLayout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heightBarrier" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
 
+    <!-- Workout Spinner -->
     <Spinner
         android:id="@+id/workoutLevelSpinner"
         android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_edittext"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/workoutLevelLabel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/workoutLevelLabel" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
 
-    <!-- Buttons -->
-
+    <!-- Creatine Label -->
     <TextView
         android:id="@+id/TakeCreatine"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
         android:text="Creatine"
-        android:textColor="#00FFFF"
+        android:textColor="?android:textColorPrimary"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@id/workoutLevelSpinner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/workoutLevelSpinner" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
 
+    <!-- Creatine Switch -->
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/creatineSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:showText="true"
-        android:switchMinWidth="400dp"
-        android:switchPadding="50dp"
-        android:textOff="No"
         android:textOn="Yes"
-        android:thumbTint="#00FFFF"
-        android:trackTint="#003333"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:textOff="No"
+        android:showText="true"
+        android:thumbTint="?attr/colorPrimary"
+        android:trackTint="?attr/colorPrimaryVariant"
+        app:layout_constraintTop_toBottomOf="@id/TakeCreatine"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/TakeCreatine" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
 
+    <!-- Save Button -->
     <Button
         android:id="@+id/btnEditProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:backgroundTint="#00FFFF"
         android:text="Save Changes"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:textColor="?android:textColorPrimary"
+        android:backgroundTint="?attr/colorPrimary"
+        app:layout_constraintTop_toBottomOf="@id/creatineSwitch"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/creatineSwitch" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp" />
 
-
+    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/nav_background"
+        app:itemIconTint="@color/nav_item_selector"
+        app:itemTextColor="@color/nav_item_selector"
         app:menu="@menu/bottom_nav_userdashboard"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

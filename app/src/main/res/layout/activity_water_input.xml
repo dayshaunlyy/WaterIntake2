@@ -4,27 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:background="#FFFFFF">
+    android:background="?android:attr/windowBackground">
 
-    <!-- Water intake input -->
-    <EditText
-        android:id="@+id/inputAmount"
+    <!-- Scrollable content -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter water intake (ml)"
-        android:inputType="numberDecimal"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNav">
 
-    <!-- Log button -->
-    <Button
-        android:id="@+id/btnLog"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Log Water Intake"
-        android:layout_below="@id/inputAmount"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#00BFFF"
-        android:textColor="#FFFFFF" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Water intake input -->
+            <EditText
+                android:id="@+id/inputAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter water intake (ml)"
+                android:inputType="numberDecimal"
+                android:layout_marginBottom="16dp"
+                android:textColor="?android:textColorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:background="@drawable/rounded_edittext" />
+
+            <!-- Log button -->
+            <Button
+                android:id="@+id/btnLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Log Water Intake"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/neon_button"
+                android:textColor="@color/colorOnPrimary" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <!-- Bottom Navigation Bar -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -32,11 +48,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="?android:attr/windowBackground"
+        android:background="@color/nav_background"
+        android:elevation="8dp"
         app:menu="@menu/bottom_nav_water_input"
-        app:labelVisibilityMode="labeled"
-        app:itemIconTint="@android:color/black"
-        app:itemTextColor="@android:color/black" />
-
+        app:itemIconTint="@color/nav_item_selector"
+        app:itemTextColor="@color/nav_item_selector"
+        app:labelVisibilityMode="labeled" />
 
 </RelativeLayout>

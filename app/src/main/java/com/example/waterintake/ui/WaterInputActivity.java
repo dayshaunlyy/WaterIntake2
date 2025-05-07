@@ -55,11 +55,22 @@ public class WaterInputActivity extends AppCompatActivity {
                 intent.putExtra("userId", userId);
                 startActivity(intent);
                 return true;
+
             } else if (id == R.id.nav_progress) {
                 Intent intent = new Intent(this, ProgressActivity.class);
                 intent.putExtra("userId", userId);
                 startActivity(intent);
                 return true;
+
+            } else if (id == R.id.nav_log_water) {
+                return true; // already here
+
+            } else if (id == R.id.nav_settings) {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+                return true;
+
             } else if (id == R.id.nav_logout) {
                 SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
                 prefs.edit().clear().apply();
@@ -72,6 +83,7 @@ public class WaterInputActivity extends AppCompatActivity {
 
             return false;
         });
+
 
         btnLog.setOnClickListener(v -> {
             String text = inputAmount.getText().toString().trim();

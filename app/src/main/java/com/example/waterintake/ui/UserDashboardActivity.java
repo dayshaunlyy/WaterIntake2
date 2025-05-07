@@ -94,6 +94,18 @@ public class UserDashboardActivity extends AppCompatActivity {
                 Toast.makeText(this, "You're already on the Dashboard", Toast.LENGTH_SHORT).show();
                 return true;
 
+            } else if (id == R.id.nav_log_water) {
+                Intent intent = new Intent(UserDashboardActivity.this, WaterInputActivity.class);
+                intent.putExtra("userId", user.getId());
+                startActivity(intent);
+                return true;
+
+            } else if (id == R.id.nav_settings) {
+                Intent intent = new Intent(UserDashboardActivity.this, SettingsActivity.class);
+                intent.putExtra("userId", user.getId());
+                startActivity(intent);
+                return true;
+
             } else if (id == R.id.nav_logout) {
                 SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
                 prefs.edit().clear().apply();
@@ -103,14 +115,6 @@ public class UserDashboardActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             }
-
-            else if (id == R.id.nav_log_water) {
-                Intent intent = new Intent(UserDashboardActivity.this, WaterInputActivity.class);
-                intent.putExtra("userId", userId);
-                startActivity(intent);
-                return true;
-            }
-
 
             return false;
         });
