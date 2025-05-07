@@ -49,7 +49,19 @@ public class ProgressActivity extends AppCompatActivity {
         btnReset = findViewById(R.id.btnReset);
         btnSettings = findViewById(R.id.btnSettings);
         btnEditStats = findViewById(R.id.btnEditStats);
-        laserEffectImage = findViewById(R.id.laserEffectImage); // ImageView for the laser effect
+        laserEffectImage = findViewById(R.id.laserEffectImage);
+        Button btnLogout = findViewById(R.id.btnLogout);
+        btnLogout.setOnClickListener(v -> {
+            // Clear saved preferences (optional)
+            getSharedPreferences("AppPrefs", MODE_PRIVATE).edit().clear().apply();
+
+            // Navigate to the LoginActivity or your start screen
+            Intent intent = new Intent(ProgressActivity.this, LoginActivity.class); // Replace with your actual login activity
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear back stack
+            startActivity(intent);
+            finish();
+        });
+// ImageView for the laser effect
 
         // Set the max value for the progress bar
         progressBar.setMax(100);
@@ -161,6 +173,7 @@ public class ProgressActivity extends AppCompatActivity {
                     .start();
         }, 3000); // Delay for 5000 milliseconds (5 seconds)
     }
+
     @Override
     protected void onResume() {
         super.onResume();
