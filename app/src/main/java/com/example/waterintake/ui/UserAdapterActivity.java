@@ -48,6 +48,12 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
         return new UserViewHolder(binding);
     }
 
+    @NonNull
+    @Override
+    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return null;
+    }
+
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = getItem(position);
