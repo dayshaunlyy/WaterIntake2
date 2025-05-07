@@ -26,6 +26,8 @@ public class User {
 
     private int wakingHours;
 
+    private double currentIntake;
+
     // Constructor
     public User(String username, String password) {
         this.username = username;
@@ -36,6 +38,7 @@ public class User {
         this.totalIntake = 0;
         this.hourlyIntake=0;
         this.wakingHours=0;
+        this.currentIntake= 0;
 
     }
 
@@ -74,4 +77,8 @@ public class User {
     public int getWakingHours() { return wakingHours; }
 
     public void setWakingHours(int wakingHours) { this.wakingHours = wakingHours; }
+
+    public double getCurrentIntake(){return currentIntake;}
+
+    public void setCurrentIntake(double currentIntake) {this.currentIntake = currentIntake;}
 }
