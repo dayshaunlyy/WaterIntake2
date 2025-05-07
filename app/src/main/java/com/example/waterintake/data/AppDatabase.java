@@ -7,19 +7,16 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-import androidx.room.TypeConverters;
 
 import com.example.waterintake.data.dao.UserDao;
 import com.example.waterintake.data.entities.User;
 import com.example.waterintake.data.dao.DrinkLogDao;
 import com.example.waterintake.data.entities.DrinkLogEntry;
-import com.example.waterintake.util.LocalDateTimeConverter;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {User.class, DrinkLogEntry.class}, version = 5, exportSchema = false)
-@TypeConverters(LocalDateTimeConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract DrinkLogDao drinkLogDao();
@@ -45,22 +42,18 @@ public abstract class AppDatabase extends RoomDatabase {
         return instance;
     }
 
-    // Room callback to prepopulate database
     private static final Callback roomCallback = new Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-
             databaseWriteExecutor.execute(() -> {
                 UserDao userDao = instance.userDao();
-
                 User sampleUser = new User("testuser", "testpass");
                 sampleUser.setHeight(175.0);
                 sampleUser.setWeight(70.0);
                 sampleUser.setUnitSystem("metric");
                 sampleUser.setWorkoutLevel("Moderate");
                 sampleUser.setUseCreatine(false);
-
                 userDao.insert(sampleUser);
             });
         }
@@ -87,7 +80,8 @@ public abstract class AppDatabase extends RoomDatabase {
                     "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
                     "`user_id` INTEGER NOT NULL, " +
                     "`amount_ml` REAL NOT NULL, " +
-                    "`timestamp` TEXT)");
+                    "`timestamp` TEXT, " +
+                    "`date` TEXT)");
         }
     };
 }
