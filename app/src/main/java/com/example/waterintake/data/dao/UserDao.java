@@ -32,7 +32,6 @@ public interface UserDao {
     @Query("DELETE FROM users WHERE id = :userId")
     void deleteUserById(int userId);
 
-    // ✅ NEW: Fetch all users
     @Query("SELECT * FROM users")
     List<User> getAllUsersSync();
 }
