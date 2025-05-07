@@ -3,27 +3,24 @@ package com.example.waterintake.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.CompoundButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.appcompat.widget.Toolbar;
 
 import com.example.waterintake.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private SwitchCompat themeSwitch;
+    private androidx.appcompat.widget.SwitchCompat themeSwitch;
+    private SharedPreferences prefs;
+    private int userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
-
-        if (!preferences.contains("dark_mode")) {
-            preferences.edit().putBoolean("dark_mode", true).apply(); // Default to dark
-        }
-
-        boolean isDarkMode = preferences.getBoolean("dark_mode", true);
+        prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+        boolean isDarkMode = prefs.getBoolean("dark_mode", false);
         AppCompatDelegate.setDefaultNightMode(
                 isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
         );
@@ -31,37 +28,57 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        // Setup toolbar with back button
-        Toolbar toolbar = findViewById(R.id.settingsToolbar);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        userId = getIntent().getIntExtra("userId", -1);
 
-        // Theme switch logic
         themeSwitch = findViewById(R.id.themeSwitch);
         themeSwitch.setChecked(isDarkMode);
 
-        themeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            preferences.edit().putBoolean("dark_mode", isChecked).apply();
+        themeSwitch.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
+            prefs.edit().putBoolean("dark_mode", isChecked).apply();
             AppCompatDelegate.setDefaultNightMode(
                     isChecked ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
             );
 
-            // Restart app to apply theme change across all activities
-            Intent intent = getBaseContext().getPackageManager()
-                    .getLaunchIntentForPackage(getBaseContext().getPackageName());
-            if (intent != null) {
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finishAffinity(); // Close all activities
-            }
+            Intent restartIntent = new Intent(getApplicationContext(), SettingsActivity.class);
+            restartIntent.putExtra("userId", userId);
+            restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(restartIntent);
+            finish();
         });
-    }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.nav_settings);
+
+        bottomNav.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_dashboard) {
+                Intent intent = new Intent(this, UserDashboardActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+                return true;
+
+            } else if (itemId == R.id.nav_progress) {
+                Intent intent = new Intent(this, ProgressActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+                return true;
+
+            } else if (itemId == R.id.nav_log_water) {
+                Intent intent = new Intent(this, WaterInputActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+                return true;
+
+            } else if (itemId == R.id.nav_logout) {
+                prefs.edit().clear().apply();
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                return true;
+            }
+
+            return false;
+        });
     }
 }

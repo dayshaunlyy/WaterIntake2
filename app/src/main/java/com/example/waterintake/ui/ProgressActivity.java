@@ -1,11 +1,11 @@
 package com.example.waterintake.ui;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
-import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,12 +27,27 @@ public class ProgressActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Load theme setting if you use it (optional)
+        SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+        boolean isDarkMode = prefs.getBoolean("dark_mode", false);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress);
 
-        // Bottom Navigation
+        userId = getIntent().getIntExtra("userId", -1);
+        if (userId == -1) {
+            Toast.makeText(this, "Invalid user ID", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
+        progressBar = findViewById(R.id.progressBar);
+        progressText = findViewById(R.id.progressText);
+
+        // Setup bottom navigation
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
         bottomNav.setSelectedItemId(R.id.nav_progress);
+
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
 
@@ -47,8 +62,12 @@ public class ProgressActivity extends AppCompatActivity {
                 intent.putExtra("userId", userId);
                 startActivityForResult(intent, 101);
                 return true;
+            } else if (id == R.id.nav_settings) {
+                Intent intent = new Intent(this, SettingsActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+                return true;
             } else if (id == R.id.nav_logout) {
-                SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
                 prefs.edit().clear().apply();
                 Intent intent = new Intent(this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -59,16 +78,7 @@ public class ProgressActivity extends AppCompatActivity {
             return false;
         });
 
-        progressBar = findViewById(R.id.progressBar);
-        progressText = findViewById(R.id.progressText);
-
-        userId = getIntent().getIntExtra("userId", -1);
-        if (userId == -1) {
-            Toast.makeText(this, "Invalid user ID", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-
+        // Load and calculate progress
         executor.execute(() -> {
             AppDatabase db = AppDatabase.getInstance(this);
             User user = db.userDao().getUserByIdSync(userId);
@@ -78,9 +88,8 @@ public class ProgressActivity extends AppCompatActivity {
                 return;
             }
 
-            String today = LocalDate.now().toString(); // format: yyyy-MM-dd
+            String today = LocalDate.now().toString(); // yyyy-MM-dd
             double todayIntake = db.drinkLogDao().getTodayIntake(userId, today);
-
             double goal = calculateWaterGoal(user);
             int progressPercent = (int) ((todayIntake / goal) * 100);
 
