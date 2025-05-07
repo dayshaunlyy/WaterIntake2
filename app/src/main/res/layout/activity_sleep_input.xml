@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Calculate Hourly Water Intake"
-        android:textColor="#00FFFF"
+        android:textColor="?android:textColorPrimary"
         android:textSize="28sp"
         android:textAlignment="center"
         android:textStyle="bold"
@@ -26,7 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Wake Up Time"
-        android:textColor="#00FFFF"
+        android:textColor="?android:textColorPrimary"
         android:textSize="22sp"
         android:gravity="center" />
 
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bed Time"
-        android:textColor="#00FFFF"
+        android:textColor="?android:textColorPrimary"
         android:textSize="22sp"
         android:layout_marginTop="24dp"
         android:gravity="center" />
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Waking Hours"
-            android:textColor="#00FFFF"
+            android:textColor="?android:textColorPrimary"
             android:textSize="23sp" />
 
         <TextView
@@ -118,7 +118,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="--"
-            android:textColor="#00FFFF"
+            android:textColor="?android:textColorPrimary"
             android:textSize="35sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -152,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Hourly Water Goal"
-                android:textColor="#00FFFF"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="25sp" />
 
             <TextView
@@ -162,7 +162,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="--"
-                android:textColor="#00FFFF"
+                android:textColor="?android:textColorPrimary"
                 android:textSize="35sp"
                 android:textStyle="bold" />
         </LinearLayout>
