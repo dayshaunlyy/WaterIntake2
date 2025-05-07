@@ -20,6 +20,8 @@ public class User {
 
     private boolean useCreatine; // store true or false if user is taking creatine 1.30x increase if true
 
+    private double totalIntake;
+
     // Constructor
     public User(String username, String password) {
         this.username = username;
@@ -27,6 +29,7 @@ public class User {
         this.unitSystem = "metric";
         this.useCreatine = false;
         this.workoutLevel = "Moderate";
+        this.totalIntake = 0;
         // Default to metric system
     }
 
@@ -54,6 +57,9 @@ public class User {
 
     public boolean getUseCreatine() { return useCreatine; }
     public void setUseCreatine(boolean useCreatine) { this.useCreatine = useCreatine; }
+
+    public double getTotalIntake() { return totalIntake; }
+    public void setTotalIntake(double totalIntake) { this.totalIntake = totalIntake; }
 
 
 }

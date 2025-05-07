@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="?android:attr/windowBackground">
+
+    <!-- Updated Toolbar with theme-aware styling -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/settingsToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:title="Settings"
+        android:titleTextColor="?android:textColorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <!-- TextView title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="App Settings"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:textColor="?android:textColorPrimary" />
+
+    <!-- Dark Mode switch -->
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/themeSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Light/Dark Mode"
+        android:textSize="16sp"
+        android:textColor="?android:textColorPrimary" />
+
+</LinearLayout>

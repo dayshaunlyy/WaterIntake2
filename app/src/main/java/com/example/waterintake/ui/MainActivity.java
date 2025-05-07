@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import android.widget.Switch;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,23 +15,21 @@ import com.example.waterintake.R;
 public class MainActivity extends AppCompatActivity {
 
     private EditText feetInput, inchInput, weightInput;
-    private ToggleButton unitToggle;
+    private Switch unitToggle;
     private TextView resultTotal, resultHourly;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_user_dashboard);
 
-        feetInput = findViewById(R.id.feetInput);
-        inchInput = findViewById(R.id.inchInput);
-        weightInput = findViewById(R.id.weightInput);
-        unitToggle = findViewById(R.id.unitToggle);
-        resultTotal = findViewById(R.id.totalWaterText);
-        resultHourly = findViewById(R.id.hourlyWaterText);
+        feetInput = findViewById(R.id.etUserFeet);
+        inchInput = findViewById(R.id.etUserInches);
+        weightInput = findViewById(R.id.etUserWeight);
+        unitToggle = findViewById(R.id.transferSwitch);
 
-        findViewById(R.id.calcBtn).setOnClickListener(v -> calculateWaterIntake());
+        findViewById(R.id.btnEditProfile).setOnClickListener(v -> calculateWaterIntake());
     }
 
     private void calculateWaterIntake() {

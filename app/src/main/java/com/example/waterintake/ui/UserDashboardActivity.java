@@ -4,9 +4,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
-import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.AdapterView;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -24,6 +28,8 @@ public class UserDashboardActivity extends AppCompatActivity {
     private ActivityUserDashboardBinding binding;
     private User user;
     private final ExecutorService executor = Executors.newSingleThreadExecutor(); // ✅ More efficient
+    private Switch yourSwitch;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,25 +43,80 @@ public class UserDashboardActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid User", Toast.LENGTH_SHORT).show();
             finish();
             return;
+
         }
+
+        yourSwitch = findViewById(R.id.transferSwitch);
+        setupSwitch();
 
         loadUserDetails(userId);
 
-        // ✅ Set up Workout Level Spinner Adapter
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.workout_levels,
-                android.R.layout.simple_spinner_item
-        );
+        // Display full labels, but store short values
+        String[] workoutLevelsDisplay = getResources().getStringArray(R.array.workout_levels_display);
+        String[] workoutLevelsValues = getResources().getStringArray(R.array.workout_levels_values);
+
+        // Set up the adapter with full labels
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, workoutLevelsDisplay);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.workoutLevelSpinner.setAdapter(adapter);
 
-        binding.btnEditProfile.setOnClickListener(v -> saveChanges());
-        binding.btnLogout.setOnClickListener(v -> finish());
+        // Pre-select based on user's saved value (e.g., "High")
+        if (user != null) {
+            int index = 0;
+            for (int i = 0; i < workoutLevelsValues.length; i++) {
+                if (workoutLevelsValues[i].equals(user.getWorkoutLevel())) {
+                    index = i;
+                    break;
+                }
+            }
+            binding.workoutLevelSpinner.setSelection(index);
+        }
 
-        setupSeekBar();
+
+        binding.btnEditProfile.setOnClickListener(v -> saveChanges());
+
+        setupSwitch();
         setupCreatineSwitch();
         setupWorkoutSpinner();
+
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
+
+        bottomNav.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.nav_progress) {
+                Intent progressIntent = new Intent(UserDashboardActivity.this, ProgressActivity.class);
+                progressIntent.putExtra("userId", user.getId());
+                startActivity(progressIntent);
+                return true;
+
+            } else if (id == R.id.nav_dashboard) {
+                Toast.makeText(this, "You're already on the Dashboard", Toast.LENGTH_SHORT).show();
+                return true;
+
+            } else if (id == R.id.nav_logout) {
+                SharedPreferences prefs = getSharedPreferences("app_prefs", MODE_PRIVATE);
+                prefs.edit().clear().apply();
+
+                Intent intent = new Intent(UserDashboardActivity.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                return true;
+            }
+
+            else if (id == R.id.nav_log_water) {
+                Intent intent = new Intent(UserDashboardActivity.this, WaterInputActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+                return true;
+            }
+
+
+            return false;
+        });
+
+
+
     }
 
     private void setupWorkoutSpinner() {
@@ -94,25 +155,20 @@ public class UserDashboardActivity extends AppCompatActivity {
         });
     }
 
-    private void setupSeekBar() {
-        binding.transferSwitch.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress == 0) {
-                    if (user != null) user.setUnitSystem("standard");
+    private void setupSwitch() {
+        yourSwitch.setOnCheckedChangeListener((buttonView, isCheckedVal) -> {
+            if (user != null) {
+                if (isCheckedVal) {
+                    user.setUnitSystem("metric");
                 } else {
-                    if (user != null) user.setUnitSystem("metric");
+                    user.setUnitSystem("standard");
                 }
-                setupViewByUnit();
-                prefillHeightWeight();
             }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            setupViewByUnit();
+            prefillHeightWeight();
         });
     }
+
 
     private void setupCreatineSwitch() {
         binding.creatineSwitch.setOnCheckedChangeListener((CompoundButton buttonView, boolean isChecked) -> {
@@ -144,7 +200,7 @@ public class UserDashboardActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 if (user != null) {
                     binding.tvUserName.setText("Welcome, " + user.getUsername() + "!");
-                    binding.transferSwitch.setProgress("standard".equals(user.getUnitSystem()) ? 0 : 1);
+                    binding.transferSwitch.setChecked("standard".equals(user.getUnitSystem()));
                     binding.creatineSwitch.setChecked(user.getUseCreatine());
                     binding.workoutLevelSpinner.setSelection(getWorkoutIndex(user.getWorkoutLevel()));
 
@@ -255,8 +311,9 @@ public class UserDashboardActivity extends AppCompatActivity {
         user.setWeight(weightKg);
         user.setUseCreatine(binding.creatineSwitch.isChecked());
 
-        String selectedWorkoutLevel = binding.workoutLevelSpinner.getSelectedItem().toString();
-        user.setWorkoutLevel(selectedWorkoutLevel);
+        int selectedIndex = binding.workoutLevelSpinner.getSelectedItemPosition();
+        String[] workoutLevelsValues = getResources().getStringArray(R.array.workout_levels_values);
+        user.setWorkoutLevel(workoutLevelsValues[selectedIndex]);
 
         binding.btnEditProfile.setEnabled(false);
 
