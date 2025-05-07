@@ -1,7 +1,6 @@
 package com.example.waterintake.ui;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.waterintake.R;
 import com.example.waterintake.data.AppDatabase;
@@ -34,11 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
-        boolean isDarkMode = preferences.getBoolean("dark_mode", true);
-        AppCompatDelegate.setDefaultNightMode(
-                isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
-        );
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -85,13 +78,13 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 if (user != null) {
                     displayUserData(user);
-                    binding.btnBack.setOnClickListener(v -> {
+                    binding.btnBackToMain.setOnClickListener(v -> {
                         Intent intent = new Intent(MainActivity.this, UserDashboardActivity.class);
                         intent.putExtra("userId", user.getId());
                         startActivity(intent);
                         finish();
                     });
-                    binding.btnBack.setOnClickListener(v -> {
+                    binding.btnSaveContinue.setOnClickListener(v -> {
                         Intent intent = new Intent(MainActivity.this, sleepInputActivity.class);
                         intent.putExtra("userId", user.getId());
                         startActivity(intent);
@@ -208,3 +201,4 @@ public class MainActivity extends AppCompatActivity {
         executor.shutdown();
     }
 }
+

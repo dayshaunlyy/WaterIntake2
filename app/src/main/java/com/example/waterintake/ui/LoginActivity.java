@@ -1,14 +1,12 @@
 package com.example.waterintake.ui;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.waterintake.AdminUtils;
 import com.example.waterintake.R;
@@ -22,11 +20,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences preferences = getSharedPreferences("settings", MODE_PRIVATE);
-        boolean isDarkMode = preferences.getBoolean("dark_mode", true);
-        AppCompatDelegate.setDefaultNightMode(
-                isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
-        );
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -62,10 +55,23 @@ public class LoginActivity extends AppCompatActivity {
                         if (user.getPassword().equals(password)) {
                             Log.e(TAG, "Login successful for userId: " + user.getId());
 
-                            Intent intent = new Intent(LoginActivity.this, UserDashboardActivity.class);
+                            // ✅ Check last screen and userId in SharedPreferences
+                            String lastScreen = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+                                    .getString("lastScreen", "");
+                            int lastUserId = getSharedPreferences("AppPrefs", MODE_PRIVATE)
+                                    .getInt("lastUserId", -1);
+
+                            Intent intent;
+                            if ("progress".equals(lastScreen) && lastUserId == user.getId()) {
+                                intent = new Intent(LoginActivity.this, ProgressActivity.class);
+                            } else {
+                                intent = new Intent(LoginActivity.this, UserDashboardActivity.class);
+                            }
+
                             intent.putExtra("userId", user.getId());
                             startActivity(intent);
                             finish();
+
                         } else {
                             Log.e(TAG, "Incorrect password for username: " + username);
                             Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
@@ -77,11 +83,13 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
             } catch (Exception e) {
-                Log.e(TAG, "Error during login", e); // ✅ logs entire exception stack
+                Log.e(TAG, "Error during login", e);
                 runOnUiThread(() ->
                         Toast.makeText(LoginActivity.this, "Login failed: " + e.getMessage(), Toast.LENGTH_SHORT).show()
                 );
             }
         }).start();
     }
+
 }
+
