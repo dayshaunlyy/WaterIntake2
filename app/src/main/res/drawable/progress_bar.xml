@@ -1,0 +1,17 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background of the bar -->
+    <item android:id="@android:id/background">
+        <shape>
+            <solid android:color="#222222" />
+        </shape>
+    </item>
+
+    <!-- Progress fill -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <solid android:color="#00FFFF" /> <!-- Neon blue -->
+            </shape>
+        </clip>
+    </item>
+</layer-list>

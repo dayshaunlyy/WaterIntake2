@@ -99,7 +99,12 @@ public class sleepInputActivity extends AppCompatActivity {
 
                         executor.execute(() -> {
                             AppDatabase.getInstance(this).userDao().updateUser(user);  // Persist changes
-                            runOnUiThread(this::finish);  // Close activity or navigate
+                            runOnUiThread(() -> {
+                                Intent intent = new Intent(sleepInputActivity.this, ProgressActivity.class);
+                                intent.putExtra("userId", userId);
+                                startActivity(intent);
+                                finish();
+                            }); // Close activity or navigate
                         });
                     });
 
