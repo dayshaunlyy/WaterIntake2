@@ -1,10 +1,16 @@
 package com.example.waterintake.ui;
 
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,6 +37,30 @@ public class sleepInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sleep_input);
 
+        // Animate the background of the LinearLayout (hourlyIntakeBox)
+        LinearLayout hourlyIntakeBox = findViewById(R.id.hourlyIntakeBox);
+        Drawable background = hourlyIntakeBox.getBackground();
+        if (background instanceof AnimationDrawable) {
+            AnimationDrawable animationDrawable = (AnimationDrawable) background;
+            animationDrawable.setEnterFadeDuration(200);  // Fade-in effect duration
+            animationDrawable.setExitFadeDuration(200);   // Fade-out effect duration
+            animationDrawable.start();  // Start the animation
+        }
+
+        // Animate waterGoalLabel and tvWaterGoal text
+        TextView label = findViewById(R.id.hourlyIntakeLabel);
+        TextView goal = findViewById(R.id.tvHourlyIntake);
+
+        // Set up alpha animation for labels
+        AlphaAnimation anim = new AlphaAnimation(0.3f, 1.0f); // Fade from 30% to 100%
+        anim.setDuration(500);  // Duration of the animation
+        anim.setRepeatMode(AlphaAnimation.REVERSE);  // Reverse the animation after completion
+        anim.setRepeatCount(AlphaAnimation.INFINITE); // Make it repeat indefinitely
+
+        label.startAnimation(anim);
+        goal.startAnimation(anim);
+
+        // Initialize spinners and set their listeners
         spinnerWakeHour = findViewById(R.id.spinnerWakeHour);
         spinnerWakePeriod = findViewById(R.id.spinnerWakePeriod);
         spinnerSleepHour = findViewById(R.id.spinnerSleepHour);
@@ -55,12 +85,46 @@ public class sleepInputActivity extends AppCompatActivity {
     }
 
     private void setupSpinners() {
-        ArrayAdapter<String> hourAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, hours);
+        // Create the adapter for both hours and periods
+        ArrayAdapter<String> hourAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, hours) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView textView = (TextView) view;
+                textView.setTextColor(getResources().getColor(R.color.neonBlue)); // Neon blue color for the selected item
+                return view;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView textView = (TextView) view;
+                textView.setTextColor(getResources().getColor(R.color.neonBlue)); // Neon blue color for dropdown items
+                return view;
+            }
+        };
         hourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ArrayAdapter<String> periodAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, periods);
+        ArrayAdapter<String> periodAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, periods) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView textView = (TextView) view;
+                textView.setTextColor(getResources().getColor(R.color.neonBlue)); // Neon blue color for the selected item
+                return view;
+            }
+
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView textView = (TextView) view;
+                textView.setTextColor(getResources().getColor(R.color.neonBlue)); // Neon blue color for dropdown items
+                return view;
+            }
+        };
         periodAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        // Set the adapters to the spinners
         spinnerWakeHour.setAdapter(hourAdapter);
         spinnerWakePeriod.setAdapter(periodAdapter);
         spinnerSleepHour.setAdapter(hourAdapter);
@@ -70,6 +134,7 @@ public class sleepInputActivity extends AppCompatActivity {
             @Override public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
                 calculateAndDisplay();
             }
+
             @Override public void onNothingSelected(AdapterView<?> parent) {}
         };
 

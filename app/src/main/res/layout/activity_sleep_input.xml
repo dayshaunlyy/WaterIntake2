@@ -42,16 +42,18 @@
             android:id="@+id/spinnerWakeHour"
             android:layout_width="110dp"
             android:layout_height="60dp"
+            android:textSize="20sp"
             android:backgroundTint="#00FFFF"
-            android:popupBackground="#00FFFF" />
+            android:popupBackground="#000000" />
 
         <Spinner
             android:id="@+id/spinnerWakePeriod"
             android:layout_width="110dp"
             android:layout_height="60dp"
+            android:textSize="20sp"
             android:layout_marginStart="8dp"
             android:backgroundTint="#00FFFF"
-            android:popupBackground="#00FFFF" />
+            android:popupBackground="#000000" />
     </LinearLayout>
 
     <!-- Bed Time -->
@@ -76,16 +78,18 @@
             android:id="@+id/spinnerSleepHour"
             android:layout_width="110dp"
             android:layout_height="60dp"
+            android:textSize="20sp"
             android:backgroundTint="#00FFFF"
-            android:popupBackground="#00FFFF" />
+            android:popupBackground="#000000" />
 
         <Spinner
             android:id="@+id/spinnerSleepPeriod"
             android:layout_width="110dp"
             android:layout_height="60dp"
+            android:textSize="20sp"
             android:layout_marginStart="8dp"
             android:backgroundTint="#00FFFF"
-            android:popupBackground="#00FFFF" />
+            android:popupBackground="#000000" />
     </LinearLayout>
 
     <!-- Waking Hours Box -->
@@ -125,12 +129,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/logoBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:shimmer_auto_start="true"
         app:shimmer_duration="3000"
         app:shimmer_base_alpha="1"
         app:shimmer_highlight_alpha="2.0">
 
-        <LinearLayout
+
+    <LinearLayout
             android:id="@+id/hourlyIntakeBox"
             android:layout_width="250dp"
             android:layout_height="150dp"
