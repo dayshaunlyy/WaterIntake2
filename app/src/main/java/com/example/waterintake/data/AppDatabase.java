@@ -16,7 +16,7 @@ import com.example.waterintake.data.entities.DrinkLogEntry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class, DrinkLogEntry.class}, version = 5, exportSchema = false)
+@Database(entities = {User.class, DrinkLogEntry.class}, version = 6, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract DrinkLogDao drinkLogDao();
