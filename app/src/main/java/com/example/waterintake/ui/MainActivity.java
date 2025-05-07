@@ -78,13 +78,13 @@ public class MainActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 if (user != null) {
                     displayUserData(user);
-                    binding.btnBackToMain.setOnClickListener(v -> {
+                    binding.btnBack.setOnClickListener(v -> {
                         Intent intent = new Intent(MainActivity.this, UserDashboardActivity.class);
                         intent.putExtra("userId", user.getId());
                         startActivity(intent);
                         finish();
                     });
-                    binding.btnSaveContinue.setOnClickListener(v -> {
+                    binding.btnBack.setOnClickListener(v -> {
                         Intent intent = new Intent(MainActivity.this, sleepInputActivity.class);
                         intent.putExtra("userId", user.getId());
                         startActivity(intent);

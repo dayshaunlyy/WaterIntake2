@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="light_background">#FFFFFF</color> <!-- fallback -->
-    <color name="dark_background">#121212</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="workout_high">#0654F0</color>
+    <color name="workout_moderate">#2375EF</color>
+    <color name="workout_light">#2E98E4</color>
+    <color name="workout_sedentary">#00FFFF</color>
 
-    <!-- Optional: Theme colors -->
+    <!-- Override for dark mode -->
+    <color name="light_background">#FFFFFF</color>
+    <color name="dark_background">#121212</color>
+    <color name="background">#121212</color>
+
     <color name="colorPrimary">#00FFFF</color>
     <color name="colorOnPrimary">#000000</color>
+
+    <color name="edittext_background">#000000</color>
+    <color name="edittext_border">#00FFFF</color>
+
+    <color name="neon_box_background">#000000</color>
+    <color name="neon_border">#00FFFF</color>
 </resources>
