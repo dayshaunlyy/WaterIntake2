@@ -14,6 +14,12 @@
     <string name="weight_lbs_or_kg">Weight (lbs or kg)</string>
     <string name="kg">kg</string>
     <string name="lbs">lbs</string>
+    <string name="user">Username</string>
+    <string name="userheight">Height</string>
+    <string name="Userweight">Weight</string>
+    <string name="Userexercise_level">Exercise Level</string>
+    <string name="Usercreatineuse">Creatine</string>
+    <string name="admin">Admin.</string>
     <string-array name="workout_levels">
         <item>High (6–7 times a week)</item>
         <item>Moderate (3–5 times a week)</item>

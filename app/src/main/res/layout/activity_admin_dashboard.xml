@@ -1,75 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.AdminDashboardActivity">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    tools:context="ui.AdminDashboardActivity">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvUsers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-    <!-- Title for Admin Dashboard -->
-    <TextView
-        android:id="@+id/tvAdminDashboardTitle"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/FirstUser"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/admin_dashboard"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"/> <!-- Corrected -->
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-    <!-- Optional Content or Features for the Admin Dashboard -->
-    <TextView
-        android:id="@+id/tvAdminInstructions"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/user" />
+
+        <TextView
+            android:id="@+id/Height"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/userheight" />
+
+        <TextView
+            android:id="@+id/Weight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Userweight" />
+
+        <TextView
+            android:id="@+id/ExerciseLevel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Userexercise_level" />
+
+        <TextView
+            android:id="@+id/TakeCreatine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Usercreatineuse" />
+    <LinearLayout
+        android:id="@+id/SecondUser"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/here_you_can_manage_users_and_view_reports"
-        android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/tvAdminDashboardTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/> <!-- Corrected -->
-    <TableLayout
-        android:id="@+id/Table_of_UserInfo"
-        android:layout_width="350dp"
-        android:layout_height="400dp"
-        app:layout_constraintTop_toBottomOf="@id/tvAdminInstructions"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        android:orientation="horizontal"
+        android:padding="16dp">
 
-    <TableRow
-        android:id="@+id/First_Row"
-        android:layout_width="350dp"
-        android:layout_height="35dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAdminInstructions"
-        />
-    <TableRow
-        android:id="@+id/Second_Row"
-        android:layout_width="350dp"
-        android:layout_height="35dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/First_Row"
-        />
-    <TableRow
-        android:id="@+id/Third_Row"
-        android:layout_width="350dp"
-        android:layout_height="35dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Second_Row"
-        />
-    <TableRow
-        android:id="@+id/Fourth_Row"
-        android:layout_width="350dp"
-        android:layout_height="35dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Third_Row"
-        />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvUserName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/user" />
+
+        <TextView
+            android:id="@+id/Height"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/userheight" />
+
+        <TextView
+            android:id="@+id/Weight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Userweight" />
+
+        <TextView
+            android:id="@+id/ExerciseLevel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Userexercise_level" />
+
+        <TextView
+            android:id="@+id/TakeCreatine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Usercreatineuse" />
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>
+

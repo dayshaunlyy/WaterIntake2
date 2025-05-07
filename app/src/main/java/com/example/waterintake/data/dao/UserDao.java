@@ -2,12 +2,15 @@ package com.example.waterintake.data.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.waterintake.data.entities.User;
+
+import java.util.List;
 
 @Dao
 public interface UserDao {
@@ -32,4 +35,10 @@ public interface UserDao {
 
     @Query("DELETE FROM users WHERE id = :userId")
     void deleteUserById(int userId);
+
+    @Query("SELECT * FROM users")
+    LiveData<List<User>> getAllUsers();
+
+    @Delete
+    void deleteUser(User user);
 }
