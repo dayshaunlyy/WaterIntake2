@@ -22,15 +22,21 @@ public class User {
 
     private double totalIntake;
 
+    private double hourlyIntake;
+
+    private int wakingHours;
+
     // Constructor
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.unitSystem = "metric";
+        this.unitSystem = "metric";// Default to metric system
         this.useCreatine = false;
         this.workoutLevel = "Moderate";
         this.totalIntake = 0;
-        // Default to metric system
+        this.hourlyIntake=0;
+        this.wakingHours=0;
+
     }
 
     // Getters and Setters
@@ -61,5 +67,11 @@ public class User {
     public double getTotalIntake() { return totalIntake; }
     public void setTotalIntake(double totalIntake) { this.totalIntake = totalIntake; }
 
+    public double getHourlyIntake() { return hourlyIntake; }
 
+    public void setHourlyIntake(double hourlyIntake) { this.hourlyIntake = hourlyIntake; }
+
+    public int getWakingHours() { return wakingHours; }
+
+    public void setWakingHours(int wakingHours) { this.wakingHours = wakingHours; }
 }

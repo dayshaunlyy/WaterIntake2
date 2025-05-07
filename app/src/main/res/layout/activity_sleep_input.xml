@@ -167,5 +167,33 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
+    <!-- Buttons Section -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="32dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnSaveContinue"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Save And Continue"
+            android:backgroundTint="#00FFFF"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnBackToMain"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:backgroundTint="#00FFFF"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+    </LinearLayout>
+
 
 </LinearLayout>

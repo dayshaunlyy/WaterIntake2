@@ -1,5 +1,6 @@
 package com.example.waterintake.ui;
 
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -79,6 +80,38 @@ public class sleepInputActivity extends AppCompatActivity {
                 if (user != null) {
                     totalIntake = user.getTotalIntake();
                     runOnUiThread(this::calculateAndDisplay);
+                    findViewById(R.id.btnSaveContinue).setOnClickListener(v -> {
+                        int wakeHour = convertTo24Hour(spinnerWakeHour.getSelectedItem().toString(), spinnerWakePeriod.getSelectedItem().toString());
+                        int sleepHour = convertTo24Hour(spinnerSleepHour.getSelectedItem().toString(), spinnerSleepPeriod.getSelectedItem().toString());
+
+                        int sleepDuration;
+                        if (sleepHour > wakeHour) {
+                            sleepDuration = 24 - (sleepHour - wakeHour);
+                        } else {
+                            sleepDuration = wakeHour - sleepHour;
+                        }
+
+                        int wakingHours = 24 - sleepDuration;
+                        double hourlyIntake = (wakingHours > 0) ? totalIntake / wakingHours : 0;
+
+                        user.setWakingHours(wakingHours);
+                        user.setHourlyIntake(hourlyIntake);
+
+                        executor.execute(() -> {
+                            AppDatabase.getInstance(this).userDao().updateUser(user);  // Persist changes
+                            runOnUiThread(this::finish);  // Close activity or navigate
+                        });
+                    });
+
+
+                    // Back button
+                    findViewById(R.id.btnBackToMain).setOnClickListener(v -> {
+                        Intent intent = new Intent(sleepInputActivity.this, MainActivity.class);
+                        intent.putExtra("userId", userId);
+                        startActivity(intent);
+                        finish();
+                    });
+
                 }
             });
         }

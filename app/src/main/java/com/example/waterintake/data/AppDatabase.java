@@ -14,7 +14,7 @@ import com.example.waterintake.data.entities.User;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class}, version = 4, exportSchema = false)// ✅ bump version to 2
+@Database(entities = {User.class}, version = 5, exportSchema = false)// now 5
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase instance;
@@ -30,7 +30,7 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "water_intake_database")
-                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4) // ✅ Add both migrations
+                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5) // ✅ Add both migrations
                             .addCallback(roomCallback)
                             .build();
 
@@ -83,6 +83,14 @@ public abstract class AppDatabase extends RoomDatabase {
             database.execSQL("ALTER TABLE users ADD COLUMN totalIntake REAL NOT NULL DEFAULT 0");
         }
     };
+    static final Migration MIGRATION_4_5 = new Migration(4, 5) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE users ADD COLUMN wakingHours REAL NOT NULL DEFAULT 0");
+            database.execSQL("ALTER TABLE users ADD COLUMN hourlyIntake REAL NOT NULL DEFAULT 0");
+        }
+    };
+
 
 
 }
