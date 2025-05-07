@@ -14,12 +14,13 @@ import android.widget.AdapterView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.waterintake.R;
 import com.example.waterintake.data.AppDatabase;
 import com.example.waterintake.data.entities.User;
 import com.example.waterintake.databinding.ActivityUserDashboardBinding;
-
+import com.example.waterintake.databinding.AdminDashboardBinding;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -34,6 +35,7 @@ public class UserDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityUserDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         int userId = getIntent().getIntExtra("userId", -1);
 
