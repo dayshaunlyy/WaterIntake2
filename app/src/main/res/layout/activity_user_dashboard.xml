@@ -129,6 +129,8 @@
             android:textColor="#00FFFF"
             android:textColorHint="#00FFFF" />
 
+
+
         <EditText
             android:id="@+id/etUserInches"
             android:layout_width="0dp"

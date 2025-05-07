@@ -17,6 +17,8 @@ import com.example.waterintake.data.entities.User;
 import com.example.waterintake.databinding.ActivityAdminDashboardBinding;
 import com.example.waterintake.viewmodels.UserViewModel;
 
+import java.util.Objects;
+
 public class AdminDashboardActivity extends AppCompatActivity {
 
     private ActivityAdminDashboardBinding binding;
@@ -31,8 +33,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
         // Setup RecyclerView
         userAdapter = new UserAdapter();
-        binding.FirstUser.setLayoutMode(new LinearLayoutManager(this));
-        binding.FirstUser.setAdapter(userAdapter);
+        Objects.requireNonNull(binding.FirstUser).setLinearLayoutManager(new LinearLayoutManager(this));
+        binding.FirstUser.setOnCapturedPointerListener((View.OnCapturedPointerListener) userAdapter);
 
         // Initialize ViewModel
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
