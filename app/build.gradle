@@ -52,7 +52,9 @@ dependencies {
     annotationProcessor libs.room.compiler
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
-    implementation "androidx.recyclerview:recyclerview:1.4.0"
-    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+    implementation libs.recyclerview
+    implementation libs.recyclerview.selection
+    implementation libs.lifecycle.livedata
+    implementation libs.lifecycle.viewmodel
 
 }

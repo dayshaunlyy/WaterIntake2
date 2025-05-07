@@ -31,8 +31,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
         // Setup RecyclerView
         userAdapter = new UserAdapter();
-        binding.usersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        binding.usersRecyclerView.setAdapter(userAdapter);
+        binding.FirstUser.setLayoutMode(new LinearLayoutManager(this));
+        binding.FirstUser.setAdapter(userAdapter);
 
         // Initialize ViewModel
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
@@ -51,7 +51,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 User userToDelete = userAdapter.getUserAt(viewHolder.getAdapterPosition());
                 showDeleteConfirmationDialog(userToDelete);
             }
-        }).attachToRecyclerView(binding.usersRecyclerView);
+        }).attachToRecyclerView(binding.FirstUser);
     }
 
     private void showDeleteConfirmationDialog(User user) {
