@@ -1,7 +1,10 @@
 package com.example.waterintake.ui;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -43,6 +46,22 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 userAdapter = new UserAdapter(users);
                 recyclerView.setAdapter(userAdapter);
             });
+        });
+
+        // Initialize logout button
+        Button logoutButton = findViewById(R.id.btnLogout);
+        logoutButton.setOnClickListener(v -> {
+            // Clear user session or preferences
+            SharedPreferences preferences1 = getSharedPreferences("settings", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences1.edit();
+            editor.putBoolean("user_logged_in", false);
+            editor.apply();
+
+            // Redirect to login screen
+            Intent intent = new Intent(AdminDashboardActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear activity stack
+            startActivity(intent);
+            finish();
         });
     }
 
