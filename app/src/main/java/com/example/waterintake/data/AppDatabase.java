@@ -16,21 +16,19 @@ import com.example.waterintake.data.entities.DrinkLogEntry;
 import com.example.waterintake.util.LocalDateTimeConverter;
 
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors; //
+import java.util.concurrent.Executors;
 
-
-@Database(entities = {User.class, DrinkLogEntry.class}, version = 4, exportSchema = false)
+@Database(entities = {User.class, DrinkLogEntry.class}, version = 5, exportSchema = false)
 @TypeConverters(LocalDateTimeConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract DrinkLogDao drinkLogDao();
+    public abstract UserDao userDao();
 
     private static volatile AppDatabase instance;
     private static final int NUMBER_OF_THREADS = 4;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-
-    public abstract UserDao userDao();
 
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {
@@ -38,16 +36,14 @@ public abstract class AppDatabase extends RoomDatabase {
                 if (instance == null) {
                     instance = Room.databaseBuilder(context.getApplicationContext(),
                                     AppDatabase.class, "water_intake_database")
-                            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4) // ✅ Add both migrations
+                            .fallbackToDestructiveMigration()
                             .addCallback(roomCallback)
                             .build();
-
                 }
             }
         }
         return instance;
     }
-
 
     // Room callback to prepopulate database
     private static final Callback roomCallback = new Callback() {
@@ -65,7 +61,6 @@ public abstract class AppDatabase extends RoomDatabase {
                 sampleUser.setWorkoutLevel("Moderate");
                 sampleUser.setUseCreatine(false);
 
-
                 userDao.insert(sampleUser);
             });
         }
@@ -78,7 +73,6 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
-//migration for workout level
     static final Migration MIGRATION_2_3 = new Migration(2, 3) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
@@ -96,7 +90,4 @@ public abstract class AppDatabase extends RoomDatabase {
                     "`timestamp` TEXT)");
         }
     };
-
-
-
 }
