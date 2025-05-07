@@ -4,6 +4,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(
         tableName = "water_intakes",
         foreignKeys = @ForeignKey(
@@ -14,6 +16,18 @@ import androidx.room.PrimaryKey;
         )
 )
 public class WaterIntake {
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof WaterIntake)) return false;
+        WaterIntake that = (WaterIntake) o;
+        return id == that.id && Double.compare(waterAmount, that.waterAmount) == 0 && userId == that.userId && Objects.equals(date, that.date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, waterAmount, date, userId);
+    }
 
     @PrimaryKey(autoGenerate = true)
     public int id;  // Primary key for the water intake record

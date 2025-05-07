@@ -12,6 +12,7 @@ import com.example.waterintake.AdminUtils;
 import com.example.waterintake.R;
 import com.example.waterintake.data.AppDatabase;
 import com.example.waterintake.data.entities.User;
+import com.example.waterintake.viewHolder.WaterIntakeAdapter;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = passwordInput.getText().toString().trim();
 
         if (username.equals(AdminUtils.ADMIN_USERNAME) && password.equals(AdminUtils.ADMIN_PASSWORD)) {
-            Intent intent = new Intent(LoginActivity.this, AdminDashboardActivity.class);
+            Intent intent = new Intent(LoginActivity.this, WaterIntakeAdapter.class);
             startActivity(intent);
             finish();
             return;

@@ -1,4 +1,4 @@
-package com.example.waterintake.viewmodels;
+package com.example.waterintake.viewHolder;
 
 import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
