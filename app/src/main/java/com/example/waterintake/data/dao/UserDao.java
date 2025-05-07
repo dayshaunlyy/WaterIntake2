@@ -9,21 +9,20 @@ import androidx.room.Update;
 
 import com.example.waterintake.data.entities.User;
 
+import java.util.List; // ✅ Add this line
+
 @Dao
 public interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(User user);
 
-    // Get user by username - synchronous (for Login)
     @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
     User getUserByUsernameSync(String username);
 
-    // Get user by userId (background thread friendly)
     @Query("SELECT * FROM users WHERE id = :userId LIMIT 1")
     User getUserByIdSync(int userId);
 
-    // Optional: If you ever want LiveData (not used for now)
     @Query("SELECT * FROM users WHERE id = :userId LIMIT 1")
     LiveData<User> getUserByIdLive(int userId);
 
@@ -32,4 +31,8 @@ public interface UserDao {
 
     @Query("DELETE FROM users WHERE id = :userId")
     void deleteUserById(int userId);
+
+    // ✅ NEW: Fetch all users
+    @Query("SELECT * FROM users")
+    List<User> getAllUsersSync();
 }
